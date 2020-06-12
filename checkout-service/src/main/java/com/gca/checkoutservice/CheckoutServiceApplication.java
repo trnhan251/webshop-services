@@ -1,12 +1,13 @@
-package com.gca.cartservice;
+package com.gca.checkoutservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CartServiceApplication {
+public class CheckoutServiceApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(CartServiceApplication.class, args);
+        SpringApplication.run(CheckoutServiceApplication.class, args);
     }
 
 }

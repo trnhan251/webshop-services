@@ -15,4 +15,7 @@ spec:
         containers:
           - name: catalog-service
             image: trnhan251/catalog-service:latest
+            env:
+              - name: SPRING_PROFILES_ACTIVE
+                value: production
 

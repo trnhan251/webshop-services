@@ -4,7 +4,7 @@ COPY pom.xml /services
 RUN mvn -f /services/pom.xml -B -DskipTests clean package
 
 FROM openjdk:13-jdk-oracle
-COPY --from=MAVEN_BUILD /services/target/catalog-service-0.0.1-SNAPSHOT.jar /app/backend.jar
+COPY --from=MAVEN_BUILD /services/target/shipping-service-0.0.1-SNAPSHOT.jar /app/backend.jar
 EXPOSE 8080
 WORKDIR /app
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "backend.jar"]

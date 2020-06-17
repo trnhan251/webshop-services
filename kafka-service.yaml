@@ -5,12 +5,11 @@ metadata:
   labels:
     name: kafka
 spec:
-  ports:
-  - port: 9092
-    targetPort: 9092
-    name: kafka-port
-    protocol: TCP
   selector:
     app: kafka
     id: "0"
-  type: LoadBalancer
+  ports:
+  - port: 9092
+    name: kafka-port
+    protocol: TCP
+  type: NodePort

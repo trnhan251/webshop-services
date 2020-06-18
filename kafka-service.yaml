@@ -10,6 +10,7 @@ spec:
     id: "0"
   ports:
   - port: 9092
+    nodePort: 31041
     name: kafka-port
     protocol: TCP
   type: NodePort

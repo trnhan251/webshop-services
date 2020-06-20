@@ -22,11 +22,18 @@ public class ProductServiceImpl implements ProductService {
         this.modelMapper = modelMapper;
     }
 
+    @Override
     public List<ProductDto> getAll() {
         return this.repository.findAll()
                 .stream()
                 .map(this::getMappedProductDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDto getProductById(int id) {
+        Product product = this.repository.getOne(id);
+        return getMappedProductDto(product);
     }
 
     private ProductDto getMappedProductDto(Product product) {

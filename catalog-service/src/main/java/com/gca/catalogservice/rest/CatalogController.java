@@ -22,6 +22,12 @@ public class CatalogController {
 
     @GetMapping()
     ResponseEntity<List<ProductDto>> getAllProducts() {
-        return ResponseEntity.of(Optional.of(productService.getAll()));
+        return ResponseEntity.of(Optional.of(this.productService.getAll()));
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<ProductDto> getProductById(int id) {
+        ProductDto productDto = this.productService.getProductById(id);
+        return productDto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(productDto);
     }
 }

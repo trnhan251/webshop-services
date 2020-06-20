@@ -12,8 +12,6 @@ public class Product {
     private String name;
     @Column(name = "price")
     private Double price;
-    @Column(name = "image_url")
-    private String imageUrl;
 
     public Integer getId() {
         return id;
@@ -37,13 +35,5 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

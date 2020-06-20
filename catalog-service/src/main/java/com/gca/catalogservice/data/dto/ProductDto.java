@@ -6,7 +6,6 @@ public class ProductDto {
     private Integer id;
     private String name;
     private Double price;
-    private String imageUrl;
 
     public Integer getId() {
         return id;
@@ -30,13 +29,5 @@ public class ProductDto {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 }

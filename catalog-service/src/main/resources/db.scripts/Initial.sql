@@ -1,6 +1,6 @@
 create table if not exists webshop_catalog.product
 (
-    id	bigserial not null constraint user_login_pk primary key,
+    id	bigserial not null constraint product_pk primary key,
     name varchar(60) not null,
     price float(4) not null
 );

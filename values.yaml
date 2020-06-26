@@ -1,0 +1,40 @@
+# Empty passwords will be randomly generated.
+
+namespace: webshop
+
+volume:
+  storageSize: 5Gi
+  path: /data/pv_webshop
+
+postgres:
+  service:
+    port: 5432
+
+  dataDir: /var/lib/postgresql/data
+  database: ""
+  storageSize: 1G
+
+  username: postgres
+  password: ""
+  db: "" # Database will be the same as .postgres.username if left empty.
+
+  image: postgres:12.3-alpine
+  port: 5432
+
+catalog:
+  db:
+    schema: webshop_catalog_schema
+    username: webshop_catalog_user
+    password: ""
+
+shipping:
+  db:
+    schema: webshop_shipping_schema
+    username: webshop_shipping_user
+    password:
+
+cart:
+  db:
+    schema: webshop_cart_schema
+    username: webshop_cart_user
+    password: ""

@@ -21,8 +21,7 @@ spec:
         ports:
         - containerPort: {{ .Values.checkout.port | int }}
         env: 
-          - name: WEBSHOP_PORT
-            value: {{ .Values.checkout.port | quote }}
 {{ include "webshop.auth.env.shipping" . | indent 10 }}
 {{ include "webshop.auth.env.cart" . | indent 10 }}
 {{ include "webshop.auth.env.catalog" . | indent 10 }}
+{{ include "webshop.auth.env.checkout" . | indent 10 }}

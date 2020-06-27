@@ -21,7 +21,6 @@ spec:
         ports:
         - containerPort: {{ .Values.catalog.port | int }}
         env: 
-          - name: WEBSHOP_PORT
-            value: {{ .Values.catalog.port | quote }}
 {{ include "webshop.db.env.secrets.catalog" . | indent 10 }} 
 {{ include "webshop.db.env.connection" . | indent 10 }}
+{{ include "webshop.auth.env.catalog" . | indent 10 }}

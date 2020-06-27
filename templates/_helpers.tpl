@@ -118,3 +118,73 @@ app.kubernetes.io/instance: {{ .Release.Name }}
   value: {{ .Values.postgres.db }}
   {{- end -}}
 {{- end -}}
+
+
+{{- define "webshop.auth.env.cart" -}}
+- name: WEBSHOP_CART_HOST
+  value: {{ template "cart.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+- name: WEBSHOP_CART_PORT
+  value: {{ .Values.cart.service.port | quote }}
+- name: WEBSHOP_CART_AUTH_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: cartUsername
+- name: WEBSHOP_CART_AUTH_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: cartPassword
+{{- end }}
+
+{{- define "webshop.auth.env.catalog" -}}
+- name: WEBSHOP_CATALOG_HOST
+  value: {{ template "catalog.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+- name: WEBSHOP_CATALOG_PORT
+  value: {{ .Values.catalog.service.port | quote }}
+- name: WEBSHOP_CATALOG_AUTH_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: catalogUsername
+- name: WEBSHOP_CATALOG_AUTH_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: catalogPassword
+{{- end }}
+
+{{- define "webshop.auth.env.shipping" -}}
+- name: WEBSHOP_SHIPPING_HOST
+  value: {{ template "shipping.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+- name: WEBSHOP_SHIPPING_PORT
+  value: {{ .Values.shipping.service.port | quote }}
+- name: WEBSHOP_SHIPPING_AUTH_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: shippingUsername
+- name: WEBSHOP_SHIPPING_AUTH_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: shippingPassword
+{{- end }}
+
+
+{{- define "webshop.auth.env.checkout" -}}
+- name: WEBSHOP_CHECKOUT_HOST
+  value: {{ template "checkout.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+- name: WEBSHOP_CHECKOUT_PORT
+  value: {{ .Values.checkout.service.port | quote }}
+- name: WEBSHOP_CHECKOUT_AUTH_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: checkoutUsername
+- name: WEBSHOP_CHECKOUT_AUTH_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ template "webshop.fullname" . }}-auth-secrets
+      key: checkoutPassword
+{{- end }}

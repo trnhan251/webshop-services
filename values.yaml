@@ -63,6 +63,10 @@ cart:
     password: ""
 
 checkout:
+  image: trnhan251/checkout-service:latest
+  port: 8080
+  service:
+    port: 8080
   auth:
     username: webshop_checkout_auth_user
     password: ""

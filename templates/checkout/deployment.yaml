@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "checkout.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "checkout.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels: {{ include "checkout.labels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      name: {{ template "checkout.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      labels: {{ include "checkout.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ template "checkout.fullname" . }}
+        image: {{ .Values.checkout.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.checkout.port | int }}
+        env: 
+          - name: WEBSHOP_PORT
+            value: {{ .Values.checkout.port | quote }}
+{{ include "webshop.auth.env.shipping" . | indent 10 }}
+{{ include "webshop.auth.env.cart" . | indent 10 }}
+{{ include "webshop.auth.env.catalog" . | indent 10 }}

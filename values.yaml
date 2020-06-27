@@ -1,6 +1,8 @@
 # Empty passwords will be randomly generated.
 
-namespace: webshop
+genPasswordLength: 12
+
+namespace: webshop-demo
 
 volume:
   storageSize: 5Gi
@@ -24,17 +26,31 @@ postgres:
 catalog:
   db:
     schema: webshop_catalog_schema
-    username: webshop_catalog_user
+    username: webshop_catalog_db_user
+    password: ""
+  auth:
+    username: webshop_catalog_auth_user
     password: ""
 
 shipping:
   db:
     schema: webshop_shipping_schema
-    username: webshop_shipping_user
-    password:
+    username: webshop_shipping_db_user
+    password: ""
+  auth:
+    username: webshop_shipping_auth_user
+    password: ""
 
 cart:
   db:
     schema: webshop_cart_schema
-    username: webshop_cart_user
+    username: webshop_cart_db_user
+    password: ""
+  auth:
+    username: webshop_cart_auth_user
+    password: ""
+
+checkout:
+  auth:
+    username: webshop_checkout_auth_user
     password: ""

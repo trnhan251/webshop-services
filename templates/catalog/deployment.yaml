@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "catalog.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "catalog.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels: {{ include "catalog.labels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      name: {{ template "catalog.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      labels: {{ include "catalog.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ template "catalog.fullname" . }}
+        image: {{ .Values.catalog.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.catalog.port | int }}
+        env: 
+          - name: WEBSHOP_PORT
+            value: {{ .Values.catalog.port | quote }}
+{{ include "webshop.db.env.secrets.catalog" . | indent 10 }} 
+{{ include "webshop.db.env.connection" . | indent 10 }}

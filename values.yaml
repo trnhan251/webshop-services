@@ -24,6 +24,10 @@ postgres:
   port: 5432
 
 catalog:
+  image: trnhan251/catalog-service:latest
+  port: 8080
+  service:
+    port: 8080
   db:
     schema: webshop_catalog_schema
     username: webshop_catalog_db_user

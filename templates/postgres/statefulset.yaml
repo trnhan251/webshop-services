@@ -17,7 +17,7 @@ spec:
           image: {{ .Values.postgres.image }}
           ports:
             - containerPort: {{ .Values.postgres.port }}
-          env:
+          env: {{ include "webshop.db.env.secrets.all" . | nindent 12 }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -29,54 +29,9 @@ spec:
                   name: {{ template "webshop.fullname" . }}-db-secrets
                   key: postgresUsername
             - name: POSTGRES_DB
-              value: {{ default .Values.postgres.db ("" | quote) }}
+              value: {{ default ("" | quote) .Values.postgres.db }}
             - name: PGDATA
               value: {{ .Values.postgres.dataDir }}
-            - name: WEBSHOP_CATALOG_SCHEMA
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: catalogSchema
-            - name: WEBSHOP_CATALOG_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: catalogUsername
-            - name: WEBSHOP_CATALOG_USER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: catalogPassword
-            - name: WEBSHOP_CART_SCHEMA
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: cartSchema
-            - name: WEBSHOP_CART_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: cartUsername
-            - name: WEBSHOP_CART_USER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: cartPassword
-            - name: WEBSHOP_SHIPPING_SCHEMA
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: shippingSchema
-            - name: WEBSHOP_SHIPPING_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: shippingUsername
-            - name: WEBSHOP_SHIPPING_USER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "webshop.fullname" . }}-db-secrets
-                  key: shippingPassword
           volumeMounts:
             - name: {{ template "postgres.fullname" . }}-datav
               mountPath: {{ .Values.postgres.dataDir }}

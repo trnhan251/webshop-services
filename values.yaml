@@ -42,6 +42,10 @@ shipping:
     password: ""
 
 cart:
+  image: trnhan251/cart-service:latest
+  port: 8080
+  service:
+    port: 8080
   db:
     schema: webshop_cart_schema
     username: webshop_cart_db_user

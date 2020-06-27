@@ -4,6 +4,9 @@ genPasswordLength: 12
 
 namespace: webshop-demo
 
+ingress:
+  host: webshop.example
+
 volume:
   storageSize: 5Gi
   path: /data/pv_webshop

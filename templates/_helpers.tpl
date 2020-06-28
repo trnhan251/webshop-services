@@ -104,11 +104,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "webshop.db.env.connection" -}}
-- name: DB_HOST
+- name: WEBSHOP_DB_HOST
   value: {{ template "postgres.fullname" . }}-headless.{{ .Release.Namespace }}.svc.cluster.local
-- name: DB_PORT
+- name: WEBSHOP_DB_PORT
   value: {{ .Values.postgres.service.port | quote }}
-- name: DB_DB
+- name: WEBSHOP_DB_DB
   {{- if empty .Values.postgres.db }}
   valueFrom:
     secretKeyRef:

@@ -50,12 +50,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "webshop.db.env.secrets.cart" -}}
-- name: WEBSHOP_CART_SCHEMA
+- name: WEBSHOP_CART_DB_SCHEMA
   valueFrom:
     secretKeyRef:
       name: {{ template "webshop.fullname" . }}-db-secrets
       key: cartSchema
-- name: WEBSHOP_CART_DB_USER
+- name: WEBSHOP_CART_DB_USERNAME
   valueFrom:
     secretKeyRef:
       name: {{ template "webshop.fullname" . }}-db-secrets
@@ -68,12 +68,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "webshop.db.env.secrets.catalog" -}}
-- name: WEBSHOP_CATALOG_SCHEMA
+- name: WEBSHOP_CATALOG_DB_SCHEMA
   valueFrom:
     secretKeyRef:
       name: {{ template "webshop.fullname" . }}-db-secrets
       key: catalogSchema
-- name: WEBSHOP_CATALOG_DB_USER
+- name: WEBSHOP_CATALOG_DB_USERNAME
   valueFrom:
     secretKeyRef:
       name: {{ template "webshop.fullname" . }}-db-secrets
@@ -86,12 +86,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "webshop.db.env.secrets.shipping" -}}
-- name: WEBSHOP_SHIPPING_SCHEMA
+- name: WEBSHOP_SHIPPING_DB_SCHEMA
   valueFrom:
     secretKeyRef:
       name: {{ template "webshop.fullname" . }}-db-secrets
       key: shippingSchema
-- name: WEBSHOP_SHIPPING_DB_USER
+- name: WEBSHOP_SHIPPING_DB_USERNAME
   valueFrom:
     secretKeyRef:
       name: {{ template "webshop.fullname" . }}-db-secrets

@@ -24,3 +24,4 @@ spec:
 {{ include "webshop.db.env.secrets.catalog" . | indent 10 }} 
 {{ include "webshop.db.env.connection" . | indent 10 }}
 {{ include "webshop.auth.env.catalog" . | indent 10 }}
+{{ include "webshop.env.spring.profiles.active" . | indent 10 }}

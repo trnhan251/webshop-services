@@ -4,6 +4,10 @@ genPasswordLength: 12
 
 namespace: webshop-demo
 
+spring:
+  profiles:
+    active: dev # Possible values are: dev, production; will default to production if the value is not recognized
+
 ingress:
   host: webshop.example
 

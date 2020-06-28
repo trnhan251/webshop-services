@@ -188,3 +188,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
       name: {{ template "webshop.fullname" . }}-auth-secrets
       key: checkoutPassword
 {{- end }}
+
+{{- define "webshop.env.spring.profiles.active" -}}
+- name: WEBSHOP_SPRING_PROFILES
+  {{- $p := (default "production" .Values.spring.profiles.active) }}
+  {{- if not (has $p (list "production" "dev")) }}
+    {{- $p = "production" }}
+  {{- end }}
+  value: {{ $p }}
+{{- end }}

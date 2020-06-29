@@ -197,3 +197,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
   {{- end }}
   value: {{ $p }}
 {{- end }}
+
+{{- define "webshop.env.spring.show-sql" -}}
+- name: WEBSHOP_SPRING_SHOW_SQL
+  value: {{ (eq .Values.spring.profiles.active "dev") | quote }}
+{{- end }}

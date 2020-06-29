@@ -25,3 +25,4 @@ spec:
 {{ include "webshop.db.env.connection" . | indent 10 }}
 {{ include "webshop.auth.env.shipping" . | indent 10 }}
 {{ include "webshop.env.spring.profiles.active" . | indent 10 }}
+{{ include "webshop.env.spring.show-sql" . | indent 10 }}

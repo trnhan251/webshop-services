@@ -1,5 +1,6 @@
 FROM maven:3.6.3-jdk-13 AS MAVEN_BUILD
-COPY src /services/src
+COPY src/main/java /services/src/main/java
+COPY src/main/resources/application-docker.properties /services/src/main/resources/application.properties
 COPY pom.xml /services
 RUN mvn -f /services/pom.xml -B -DskipTests clean package
 

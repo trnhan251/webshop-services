@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "postgres.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels: {{ include "postgres.labels" . | nindent 6 }}
+  serviceName: {{ template "postgres.fullname" . }}-headless
+  replicas: 1
+  template:
+    metadata:
+      labels: {{ include "postgres.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ template "postgres.fullname" . }}
+          image: {{ .Values.postgres.image }}
+          ports:
+            - containerPort: {{ .Values.postgres.port }}
+          env: {{ include "webshop.db.env.secrets.all" . | nindent 12 }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "webshop.fullname" . }}-db-secrets
+                  key: postgresPassword
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "webshop.fullname" . }}-db-secrets
+                  key: postgresUsername
+            - name: POSTGRES_DB
+              value: {{ default ("" | quote) .Values.postgres.db }}
+            - name: PGDATA
+              value: {{ .Values.postgres.dataDir }}
+          volumeMounts:
+            - name: {{ template "postgres.fullname" . }}-datav
+              mountPath: {{ .Values.postgres.dataDir }}
+            - name: {{ template "postgres.fullname" . }}-initv
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: {{ template "postgres.fullname" . }}-initv
+          configMap:
+            name: {{ template "postgres.fullname" . }}-init-config
+            items:
+              - key: init
+                path: init.sh
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "postgres.fullname" . }}-datav
+        namespace: {{ .Release.Namespace }}
+      spec:
+        storageClassName: {{ template "webshop.fullname" . }}-sc
+        accessModes: [ "ReadWriteMany" ]
+        resources:
+          requests:
+            storage: {{ .Values.postgres.storageSize }}

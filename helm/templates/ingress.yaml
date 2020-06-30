@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "webshop.fullname" . }}-ingress
+  labels: {{ include "webshop.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ingress
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /api/cart
+            backend:
+              serviceName: {{ template "cart.fullname" . }}
+              servicePort: {{ .Values.cart.service.port }}
+          - path: /api/catalog
+            backend:
+              serviceName: {{ template "catalog.fullname" . }}
+              servicePort: {{ .Values.catalog.service.port }}
+          - path: /api/checkout
+            backend:
+              serviceName: {{ template "checkout.fullname" . }}
+              servicePort: {{ .Values.checkout.service.port }}
+          - path: /api/shipping
+            backend:
+              serviceName: {{ template "shipping.fullname" . }}
+              servicePort: {{ .Values.shipping.service.port }}

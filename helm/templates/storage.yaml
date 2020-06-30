@@ -1,0 +1,23 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ template "webshop.fullname" . }}-sc
+  namespace: {{ .Release.Namespace }}
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "webshop.fullname" . }}-volume
+  namespace: {{ .Release.Namespace }}
+spec:
+  storageClassName: {{ template "webshop.fullname" . }}-sc
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: {{ .Values.volume.storageSize }}
+  hostPath:
+    path: {{ .Values.volume.path }}

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cart.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "cart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels: {{ include "cart.labels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      name: {{ template "cart.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      labels: {{ include "cart.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ template "cart.fullname" . }}
+        image: {{ .Values.cart.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.cart.port | int }}
+        env: 
+{{ include "webshop.db.env.secrets.cart" . | indent 10 }} 
+{{ include "webshop.db.env.connection" . | indent 10 }}
+{{ include "webshop.auth.env.cart" . | indent 10 }}
+{{ include "webshop.env.spring.profiles.active" . | indent 10 }}
+{{ include "webshop.env.spring.show-sql" . | indent 10 }}

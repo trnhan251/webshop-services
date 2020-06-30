@@ -1,0 +1,79 @@
+# Empty passwords will be randomly generated.
+
+genPasswordLength: 12
+
+namespace: webshop-demo
+
+spring:
+  profiles:
+    active: dev # Possible values are: dev, production; will default to production if the value is not recognized
+
+ingress:
+  host: webshop.example
+
+volume:
+  storageSize: 5Gi
+  path: /data/pv_webshop
+
+postgres:
+  service:
+    port: 5432
+
+  dataDir: /var/lib/postgresql/data
+  database: ""
+  storageSize: 1G
+
+  username: postgres
+  password: ""
+  db: "" # Database will be the same as .postgres.username if left empty.
+
+  image: postgres:12.3-alpine
+  port: 5432
+
+catalog:
+  image: trnhan251/catalog-service:latest
+  port: 8080
+  service:
+    port: 8080
+  db:
+    schema: webshop_catalog_schema
+    username: webshop_catalog_db_user
+    password: ""
+  auth:
+    username: webshop_catalog_auth_user
+    password: ""
+
+shipping:
+  image: trnhan251/shipping-service:latest
+  port: 8080
+  service:
+    port: 8080
+  db:
+    schema: webshop_shipping_schema
+    username: webshop_shipping_db_user
+    password: ""
+  auth:
+    username: webshop_shipping_auth_user
+    password: ""
+
+cart:
+  image: trnhan251/cart-service:latest
+  port: 8080
+  service:
+    port: 8080
+  db:
+    schema: webshop_cart_schema
+    username: webshop_cart_db_user
+    password: ""
+  auth:
+    username: webshop_cart_auth_user
+    password: ""
+
+checkout:
+  image: trnhan251/checkout-service:latest
+  port: 8080
+  service:
+    port: 8080
+  auth:
+    username: webshop_checkout_auth_user
+    password: ""

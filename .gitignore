@@ -29,3 +29,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Charts ###
+*.tgz
+
+### Temp ###
+.tmp
+.temp

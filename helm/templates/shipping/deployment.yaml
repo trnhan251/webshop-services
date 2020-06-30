@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "shipping.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "shipping.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels: {{ include "shipping.labels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      name: {{ template "shipping.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      labels: {{ include "shipping.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ template "shipping.fullname" . }}
+        image: {{ .Values.shipping.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.shipping.port | int }}
+        env: 
+{{ include "webshop.db.env.secrets.shipping" . | indent 10 }} 
+{{ include "webshop.db.env.connection" . | indent 10 }}
+{{ include "webshop.auth.env.shipping" . | indent 10 }}
+{{ include "webshop.env.spring.profiles.active" . | indent 10 }}
+{{ include "webshop.env.spring.show-sql" . | indent 10 }}

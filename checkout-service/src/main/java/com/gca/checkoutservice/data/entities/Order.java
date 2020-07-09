@@ -19,7 +19,6 @@ public class Order {
     @OneToOne
     @JoinColumn(name = "credit_card_id")
     private CreditCard creditCard;
-
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,
@@ -69,6 +68,15 @@ public class Order {
 
     public Order setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
+        return this;
+    }
+
+    public List<OrderItem> getListOrderItems() {
+        return listOrderItems;
+    }
+
+    public Order setListOrderItems(List<OrderItem> listOrderItems) {
+        this.listOrderItems = listOrderItems;
         return this;
     }
 }

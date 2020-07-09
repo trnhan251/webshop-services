@@ -1,5 +1,7 @@
 package com.gca.checkoutservice.data.dto;
 
+import com.gca.checkoutservice.data.entities.Order;
+
 import javax.persistence.Column;
 
 public class DeliveryInformationDto {
@@ -9,6 +11,7 @@ public class DeliveryInformationDto {
     private String city;
     private String state;
     private String country;
+    private Integer orderId;
 
     public Integer getId() {
         return id;
@@ -61,6 +64,15 @@ public class DeliveryInformationDto {
 
     public DeliveryInformationDto setCountry(String country) {
         this.country = country;
+        return this;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public DeliveryInformationDto setOrderId(Integer orderId) {
+        this.orderId = orderId;
         return this;
     }
 }

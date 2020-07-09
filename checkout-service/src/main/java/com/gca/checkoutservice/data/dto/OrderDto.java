@@ -1,14 +1,19 @@
 package com.gca.checkoutservice.data.dto;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.gca.checkoutservice.data.entities.CreditCard;
+import com.gca.checkoutservice.data.entities.DeliveryInformation;
+import com.gca.checkoutservice.data.entities.OrderItem;
+
+import javax.persistence.*;
+import java.util.List;
 
 public class OrderDto {
     private Integer id;
     private String sessionId;
     private String emailAddress;
+    private Integer deliveryInfoId;
+    private Integer creditCardId;
+    private List<Integer> listOrderItemIds;
 
     public Integer getId() {
         return id;
@@ -34,6 +39,33 @@ public class OrderDto {
 
     public OrderDto setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public Integer getDeliveryInfoId() {
+        return deliveryInfoId;
+    }
+
+    public OrderDto setDeliveryInfoId(Integer deliveryInfoId) {
+        this.deliveryInfoId = deliveryInfoId;
+        return this;
+    }
+
+    public Integer getCreditCardId() {
+        return creditCardId;
+    }
+
+    public OrderDto setCreditCardId(Integer creditCardId) {
+        this.creditCardId = creditCardId;
+        return this;
+    }
+
+    public List<Integer> getListOrderItemIds() {
+        return listOrderItemIds;
+    }
+
+    public OrderDto setListOrderItemIds(List<Integer> listOrderItemIds) {
+        this.listOrderItemIds = listOrderItemIds;
         return this;
     }
 }

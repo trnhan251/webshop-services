@@ -8,6 +8,7 @@ public class CreditCardDto {
     private String creditCardMonth;
     private Integer creditCardYear;
     private Integer creditCardCvv;
+    private Integer orderId;
 
     public Integer getId() {
         return id;
@@ -51,6 +52,15 @@ public class CreditCardDto {
 
     public CreditCardDto setCreditCardCvv(Integer creditCardCvv) {
         this.creditCardCvv = creditCardCvv;
+        return this;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public CreditCardDto setOrderId(Integer orderId) {
+        this.orderId = orderId;
         return this;
     }
 }

@@ -41,4 +41,13 @@ public class OrderItem {
         this.quantity = quantity;
         return this;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public OrderItem setOrder(Order order) {
+        this.order = order;
+        return this;
+    }
 }

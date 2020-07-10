@@ -1,15 +1,23 @@
 package com.gca.checkoutservice.logic.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gca.checkoutservice.data.dto.OrderItemDto;
+import com.gca.checkoutservice.data.dto.ProductDto;
 import com.gca.checkoutservice.data.entities.Order;
 import com.gca.checkoutservice.data.entities.OrderItem;
 import com.gca.checkoutservice.data.repo.OrderItemRepository;
 import com.gca.checkoutservice.data.repo.OrderRepository;
 import com.gca.checkoutservice.logic.OrderItemService;
+import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +28,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final ModelMapper modelMapper;
     private final OrderItemRepository repository;
     private final OrderRepository orderRepository;
+    @Value("${url.catalog}")
+    private String catalogUrl;
 
     public OrderItemServiceImpl(ModelMapper modelMapper, OrderItemRepository repository, OrderRepository orderRepository) {
         this.modelMapper = modelMapper;
@@ -62,6 +72,25 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItems.stream().forEach(e -> e.setOrder(order));
         List<OrderItem> newOrderItems = repository.saveAll(orderItems);
         return newOrderItems.stream().map(this::getMappedOrderItemDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getCostSumOfOrderItems(List<Integer> orderItemIds) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String jsonRequestBody = new Gson().toJson(orderItemIds);
+
+        HttpEntity<String> entity = new HttpEntity<String>(jsonRequestBody, headers);
+
+        ResponseEntity<List<ProductDto>> response = restTemplate
+                .exchange(catalogUrl + "catalog/product",
+                        HttpMethod.POST,
+                        entity,
+                        new ParameterizedTypeReference<List<ProductDto>>() {});
+        List<ProductDto> productDtoList = response.getBody();
+        return null;
     }
 
     private OrderItemDto getMappedOrderItemDto(OrderItem orderItem) {

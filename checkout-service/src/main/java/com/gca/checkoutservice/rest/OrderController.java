@@ -1,5 +1,6 @@
 package com.gca.checkoutservice.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gca.checkoutservice.data.dto.CreditCardDto;
 import com.gca.checkoutservice.data.dto.DeliveryInformationDto;
 import com.gca.checkoutservice.data.dto.OrderDto;
@@ -9,10 +10,9 @@ import com.gca.checkoutservice.logic.DeliveryInformationService;
 import com.gca.checkoutservice.logic.OrderItemService;
 import com.gca.checkoutservice.logic.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/order")
@@ -54,5 +54,11 @@ public class OrderController {
     public ResponseEntity<OrderDto> addOrderItem(@RequestBody OrderDto orderDto) {
         OrderDto dto = orderService.createOrder(orderDto);
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
+    }
+
+    @GetMapping()
+    public ResponseEntity<Double> getCostSum(@RequestBody List<Integer> orderItemIds) throws JsonProcessingException {
+        orderItemService.getCostSumOfOrderItems(orderItemIds);
+        return null;
     }
 }

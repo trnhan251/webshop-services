@@ -64,8 +64,10 @@ public class DeliveryInformationServiceImpl implements DeliveryInformationServic
     private DeliveryInformationDto getMappedDeliveryInformationDto(DeliveryInformation deliveryInformation) {
         TypeMap<DeliveryInformation, DeliveryInformationDto> typeMap = modelMapper.getTypeMap(DeliveryInformation.class,
                 DeliveryInformationDto.class);
-        return typeMap.map(deliveryInformation)
-                .setOrderId(deliveryInformation.getOrder().getId());
+        DeliveryInformationDto dto = typeMap.map(deliveryInformation);
+        if (deliveryInformation.getOrder() != null)
+            dto.setOrderId(deliveryInformation.getOrder().getId());
+        return dto;
     }
 
 }

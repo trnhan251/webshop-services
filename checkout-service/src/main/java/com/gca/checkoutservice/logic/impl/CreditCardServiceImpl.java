@@ -60,7 +60,9 @@ public class CreditCardServiceImpl implements CreditCardService {
 
     private CreditCardDto getMappedCreditCardDto(CreditCard creditCard) {
         TypeMap<CreditCard, CreditCardDto> typeMap = modelMapper.getTypeMap(CreditCard.class, CreditCardDto.class);
-        return typeMap.map(creditCard)
-                .setOrderId(creditCard.getOrder().getId());
+        CreditCardDto dto = typeMap.map(creditCard);
+        if (creditCard.getOrder() != null)
+            dto.setOrderId(creditCard.getOrder().getId());
+        return dto;
     }
 }

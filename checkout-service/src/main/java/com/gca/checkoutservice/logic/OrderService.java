@@ -9,8 +9,5 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderDto> getAllOrders();
-    OrderDto createOrder(OrderDto dto,
-                         CreditCardDto creditCardDto,
-                         DeliveryInformationDto deliveryInformationDto,
-                         List<OrderItemDto> orderItemDtos);
+    OrderDto createOrder(OrderDto dto);
 }

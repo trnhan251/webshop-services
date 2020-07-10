@@ -48,24 +48,19 @@ public class OderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(OrderDto dto,
-                                CreditCardDto creditCardDto,
-                                DeliveryInformationDto deliveryInformationDto,
-                                List<OrderItemDto> orderItemDtos) {
-        if (creditCardDto == null || deliveryInformationDto == null || orderItemDtos == null)
+    public OrderDto createOrder(OrderDto dto) {
+        if (dto.getCreditCardId() == null || dto.getDeliveryInfoId() == null || dto.getListOrderItemIds() == null)
             return null;
 
-        CreditCard creditCard = creditCardRepository.findById(creditCardDto.getId()).orElse(null);
+        CreditCard creditCard = creditCardRepository.findById(dto.getCreditCardId()).orElse(null);
         if (creditCard == null)
             return null;
 
-        DeliveryInformation deliveryInformation = deliveryInformationRepository.findById(deliveryInformationDto.getId()).orElse(null);
+        DeliveryInformation deliveryInformation = deliveryInformationRepository.findById(dto.getDeliveryInfoId()).orElse(null);
         if (deliveryInformation == null)
             return null;
 
-        List<OrderItem> orderItems = orderItemRepository.findAllById(orderItemDtos.stream()
-                                                                        .map(OrderItemDto::getId)
-                                                                        .collect(Collectors.toList()));
+        List<OrderItem> orderItems = orderItemRepository.findAllById(dto.getListOrderItemIds());
         if (orderItems == null)
             return null;
 
@@ -76,6 +71,16 @@ public class OderServiceImpl implements OrderService {
                 .setDeliveryInformation(deliveryInformation)
                 .setListOrderItems(orderItems);
         Order newOrder = repository.save(order);
+
+        creditCard.setOrder(newOrder);
+        creditCardRepository.save(creditCard);
+
+        deliveryInformation.setOrder(newOrder);
+        deliveryInformationRepository.save(deliveryInformation);
+
+        orderItems.stream().forEach(e -> e.setOrder(newOrder));
+        orderItemRepository.saveAll(orderItems);
+
         return getMappedOrderDto(newOrder);
     }
 

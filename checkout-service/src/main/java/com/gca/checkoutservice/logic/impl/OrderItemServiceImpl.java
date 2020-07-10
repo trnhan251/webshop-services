@@ -66,7 +66,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     private OrderItemDto getMappedOrderItemDto(OrderItem orderItem) {
         TypeMap<OrderItem, OrderItemDto> typeMap = modelMapper.getTypeMap(OrderItem.class, OrderItemDto.class);
-        return typeMap.map(orderItem)
-                .setOrderId(orderItem.getOrder().getId());
+        OrderItemDto dto = typeMap.map(orderItem);
+        if (orderItem.getOrder() != null)
+            dto.setOrderId(orderItem.getOrder().getId());
+        return dto;
     }
 }

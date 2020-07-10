@@ -11,6 +11,7 @@ public class OrderDto {
     private Integer id;
     private String sessionId;
     private String emailAddress;
+    private Double totalCost;
     private Integer deliveryInfoId;
     private Integer creditCardId;
     private List<Integer> listOrderItemIds;
@@ -39,6 +40,15 @@ public class OrderDto {
 
     public OrderDto setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public OrderDto setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
         return this;
     }
 

@@ -1,9 +1,7 @@
 package com.gca.checkoutservice.logic.impl;
 
-import com.gca.checkoutservice.data.dto.CreditCardDto;
-import com.gca.checkoutservice.data.dto.DeliveryInformationDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gca.checkoutservice.data.dto.OrderDto;
-import com.gca.checkoutservice.data.dto.OrderItemDto;
 import com.gca.checkoutservice.data.entities.CreditCard;
 import com.gca.checkoutservice.data.entities.DeliveryInformation;
 import com.gca.checkoutservice.data.entities.Order;
@@ -12,6 +10,7 @@ import com.gca.checkoutservice.data.repo.CreditCardRepository;
 import com.gca.checkoutservice.data.repo.DeliveryInformationRepository;
 import com.gca.checkoutservice.data.repo.OrderItemRepository;
 import com.gca.checkoutservice.data.repo.OrderRepository;
+import com.gca.checkoutservice.logic.OrderItemService;
 import com.gca.checkoutservice.logic.OrderService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
@@ -29,17 +28,19 @@ public class OderServiceImpl implements OrderService {
     private final CreditCardRepository creditCardRepository;
     private final DeliveryInformationRepository deliveryInformationRepository;
     private final OrderItemRepository orderItemRepository;
+    private final OrderItemService orderItemService;
 
     public OderServiceImpl(ModelMapper modelMapper,
                            OrderRepository repository,
                            CreditCardRepository creditCardRepository,
                            DeliveryInformationRepository deliveryInformationRepository,
-                           OrderItemRepository orderItemRepository) {
+                           OrderItemRepository orderItemRepository, OrderItemService orderItemService) {
         this.modelMapper = modelMapper;
         this.repository = repository;
         this.creditCardRepository = creditCardRepository;
         this.deliveryInformationRepository = deliveryInformationRepository;
         this.orderItemRepository = orderItemRepository;
+        this.orderItemService = orderItemService;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class OderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(OrderDto dto) {
+    public OrderDto createOrder(OrderDto dto) throws JsonProcessingException {
         if (dto.getCreditCardId() == null || dto.getDeliveryInfoId() == null || dto.getListOrderItemIds() == null)
             return null;
 
@@ -64,12 +65,16 @@ public class OderServiceImpl implements OrderService {
         if (orderItems == null)
             return null;
 
+        Double totalCost = orderItemService
+                            .getCostSumOfOrderItems(orderItems.stream().map(OrderItem::getId).collect(Collectors.toList()));
+
         Order order = new Order()
                 .setSessionId(dto.getSessionId())
                 .setEmailAddress(dto.getEmailAddress())
                 .setCreditCard(creditCard)
                 .setDeliveryInformation(deliveryInformation)
-                .setListOrderItems(orderItems);
+                .setListOrderItems(orderItems)
+                .setTotalCost(totalCost);
         Order newOrder = repository.save(order);
 
         creditCard.setOrder(newOrder);

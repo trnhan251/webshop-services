@@ -13,6 +13,8 @@ public class Order {
     private String sessionId;
     @Column(name = "email_address")
     private String emailAddress;
+    @Column(name = "total_cost")
+    private Double totalCost;
     @OneToOne
     @JoinColumn(name = "delivery_id")
     private DeliveryInformation deliveryInformation;
@@ -50,6 +52,15 @@ public class Order {
 
     public Order setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public Order setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
         return this;
     }
 

@@ -79,8 +79,10 @@ public class OrderItemServiceImpl implements OrderItemService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
-        String jsonRequestBody = new Gson().toJson(orderItemIds);
+        List<OrderItem> orderItems = repository.findAllById(orderItemIds);
+        String jsonRequestBody = new Gson().toJson(orderItems.stream()
+                .map(OrderItem::getProductId)
+                .collect(Collectors.toList()));
 
         HttpEntity<String> entity = new HttpEntity<String>(jsonRequestBody, headers);
 

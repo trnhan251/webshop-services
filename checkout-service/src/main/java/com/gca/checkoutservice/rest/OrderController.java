@@ -31,6 +31,11 @@ public class OrderController {
         this.orderItemService = orderItemService;
         this.orderService = orderService;
     }
+    @PostMapping()
+    public ResponseEntity<OrderDto> addOrderItem(@RequestBody OrderDto orderDto) {
+        OrderDto dto = orderService.createOrder(orderDto);
+        return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
+    }
 
     @PostMapping("/credit-card")
     public ResponseEntity<CreditCardDto> addCreditCard(@RequestBody CreditCardDto creditCardDto) throws Exception {
@@ -50,13 +55,7 @@ public class OrderController {
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
-    @PostMapping()
-    public ResponseEntity<OrderDto> addOrderItem(@RequestBody OrderDto orderDto) {
-        OrderDto dto = orderService.createOrder(orderDto);
-        return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
-    }
-
-    @GetMapping()
+    @PostMapping("/cost-sum-calculation")
     public ResponseEntity<Double> getCostSum(@RequestBody List<Integer> orderItemIds) throws JsonProcessingException {
         Double costSum = orderItemService.getCostSumOfOrderItems(orderItemIds);
         return costSum == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(costSum);

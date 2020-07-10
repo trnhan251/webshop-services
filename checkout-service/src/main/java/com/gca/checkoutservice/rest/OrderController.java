@@ -58,7 +58,7 @@ public class OrderController {
 
     @GetMapping()
     public ResponseEntity<Double> getCostSum(@RequestBody List<Integer> orderItemIds) throws JsonProcessingException {
-        orderItemService.getCostSumOfOrderItems(orderItemIds);
-        return null;
+        Double costSum = orderItemService.getCostSumOfOrderItems(orderItemIds);
+        return costSum == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(costSum);
     }
 }

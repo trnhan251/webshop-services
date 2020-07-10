@@ -75,7 +75,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public Integer getCostSumOfOrderItems(List<Integer> orderItemIds) throws JsonProcessingException {
+    public Double getCostSumOfOrderItems(List<Integer> orderItemIds) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -90,7 +90,20 @@ public class OrderItemServiceImpl implements OrderItemService {
                         entity,
                         new ParameterizedTypeReference<List<ProductDto>>() {});
         List<ProductDto> productDtoList = response.getBody();
-        return null;
+        List<OrderItem> orderItemList = repository.findAllById(orderItemIds);
+
+        return calculateCost(productDtoList, orderItemList);
+    }
+
+    private Double calculateCost(List<ProductDto> productDtos, List<OrderItem> orderItems) {
+        final double[] cost = {0};
+        orderItems.stream().forEach(item -> {
+            ProductDto productDto = productDtos.stream()
+                    .filter(product -> product.getId() == item.getProductId())
+                    .findAny().orElse(null);
+            cost[0] += productDto != null ? item.getQuantity()*productDto.getPrice() : 0;
+        });
+        return cost[0];
     }
 
     private OrderItemDto getMappedOrderItemDto(OrderItem orderItem) {

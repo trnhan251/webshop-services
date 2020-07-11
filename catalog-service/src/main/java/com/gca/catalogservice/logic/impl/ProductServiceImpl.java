@@ -36,6 +36,12 @@ public class ProductServiceImpl implements ProductService {
         return getMappedProductDto(product);
     }
 
+    @Override
+    public List<ProductDto> getProductsByIds(List<Integer> productIds) {
+        List<Product> productList = repository.findAllById(productIds);
+        return productList.stream().map(this::getMappedProductDto).collect(Collectors.toList());
+    }
+
     private ProductDto getMappedProductDto(Product product) {
         ProductDto productDto = modelMapper.map(product, ProductDto.class);
         return productDto;

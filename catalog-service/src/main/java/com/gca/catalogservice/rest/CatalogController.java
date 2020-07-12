@@ -18,6 +18,7 @@ public class CatalogController {
         this.productService = productService;
     }
 
+    @CrossOrigin
     @GetMapping()
     ResponseEntity<List<ProductDto>> getAllProducts() {
         return ResponseEntity.of(Optional.of(this.productService.getAll()));

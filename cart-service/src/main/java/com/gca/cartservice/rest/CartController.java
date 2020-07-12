@@ -19,26 +19,36 @@ public class CartController {
         this.orderService = orderService;
     }
 
+    @CrossOrigin
     @GetMapping()
-    ResponseEntity<List<OrderDto>> getAllOrdersBySessionId(HttpServletRequest request) {
-        return ResponseEntity.of(Optional.of(this.orderService.getAllBySessionId(request.getSession().getId())));
+    ResponseEntity<List<OrderDto>> getAllOrdersBySessionId(@RequestParam String sessionId) {
+        return ResponseEntity.of(Optional.of(this.orderService.getAllBySessionId(sessionId)));
     }
 
-    @PutMapping()
-    ResponseEntity<OrderDto> addOrder(@RequestBody OrderDto orderDto, HttpServletRequest request) {
-        OrderDto dto = this.orderService.addOrder(orderDto, request.getSession().getId());
+    @CrossOrigin
+    @GetMapping("/session")
+    ResponseEntity<String> registerSession(HttpServletRequest request) {
+        return ResponseEntity.ok(request.getSession().getId());
+    }
+
+    @CrossOrigin
+    @PostMapping()
+    ResponseEntity<OrderDto> addOrder(@RequestBody OrderDto orderDto, @RequestParam String sessionId) {
+        OrderDto dto = this.orderService.addOrder(orderDto, sessionId);
         return ResponseEntity.ok(dto);
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
-    ResponseEntity<Boolean> deleteOrder(@PathVariable Integer id, HttpServletRequest request) {
-        boolean isDeleted = this.orderService.delete(id, request.getSession().getId());
+    ResponseEntity<Boolean> deleteOrder(@PathVariable Integer id, @RequestParam String sessionId) {
+        boolean isDeleted = this.orderService.delete(id, sessionId);
         return ResponseEntity.ok(isDeleted);
     }
 
+    @CrossOrigin
     @DeleteMapping()
-    ResponseEntity<Boolean> deleteAll(HttpServletRequest request) {
-        boolean isDeleted = this.orderService.deleteAllBySessionId(request.getSession().getId());
+    ResponseEntity<Boolean> deleteAll(@RequestParam String sessionId) {
+        boolean isDeleted = this.orderService.deleteAllBySessionId(sessionId);
         return ResponseEntity.ok(isDeleted);
     }
 }

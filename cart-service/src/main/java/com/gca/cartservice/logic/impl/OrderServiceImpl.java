@@ -43,10 +43,15 @@ public class OrderServiceImpl implements OrderService {
         if (orderDto == null || orderDto.getProductId() < 1 || orderDto.getQuantity() < 1)
             return null;
 
-        Order order = new Order()
+        Order order = repository.findOrderByProductIdAndSessionId(orderDto.getProductId(), sessionId);
+
+        if (order == null)
+            order = new Order()
                 .setSessionId(sessionId)
                 .setProductId(orderDto.getProductId())
                 .setQuantity(orderDto.getQuantity());
+        else
+            order.setQuantity(orderDto.getQuantity());
 
         Order savedOrder = repository.save(order);
         return getMappedOrderDto(savedOrder);

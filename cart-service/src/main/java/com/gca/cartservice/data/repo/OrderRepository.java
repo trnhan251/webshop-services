@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findBySessionId(String sessionId);
+    Order findOrderByProductIdAndSessionId(Integer productId, String sessionId);
     void deleteBySessionId(String sessionId);
 }

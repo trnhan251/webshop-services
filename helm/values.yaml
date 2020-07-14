@@ -8,8 +8,7 @@ spring:
   profiles:
     active: dev # Possible values are: dev, production; will default to production if the value is not recognized
 
-ingress:
-  host: webshop.example
+host: webshop.example
 
 volume:
   storageSize: 5Gi

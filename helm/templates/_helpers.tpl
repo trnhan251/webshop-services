@@ -202,3 +202,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 - name: WEBSHOP_SPRING_SHOW_SQL
   value: {{ (eq .Values.spring.profiles.active "dev") | quote }}
 {{- end }}
+
+{{- define "webshop.env.host" -}}
+- name: WEBSHOP_HOST
+  value: {{ .Values.host | quote }}
+{{- end }}

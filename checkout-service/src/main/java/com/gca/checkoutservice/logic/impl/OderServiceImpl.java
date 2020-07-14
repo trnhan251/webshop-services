@@ -2,6 +2,8 @@ package com.gca.checkoutservice.logic.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gca.checkoutservice.data.dto.OrderDto;
+import com.gca.checkoutservice.data.dto.ProductDto;
+import com.gca.checkoutservice.data.dto.ShippingOrderDto;
 import com.gca.checkoutservice.data.entities.CreditCard;
 import com.gca.checkoutservice.data.entities.DeliveryInformation;
 import com.gca.checkoutservice.data.entities.Order;
@@ -12,10 +14,15 @@ import com.gca.checkoutservice.data.repo.OrderItemRepository;
 import com.gca.checkoutservice.data.repo.OrderRepository;
 import com.gca.checkoutservice.logic.OrderItemService;
 import com.gca.checkoutservice.logic.OrderService;
+import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +36,8 @@ public class OderServiceImpl implements OrderService {
     private final DeliveryInformationRepository deliveryInformationRepository;
     private final OrderItemRepository orderItemRepository;
     private final OrderItemService orderItemService;
+    @Value("${url.shipping}")
+    private String shippingUrl;
 
     public OderServiceImpl(ModelMapper modelMapper,
                            OrderRepository repository,
@@ -49,7 +58,7 @@ public class OderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDto createOrder(OrderDto dto) throws JsonProcessingException {
+    public ShippingOrderDto createOrder(OrderDto dto) throws JsonProcessingException {
         if (dto.getCreditCardId() == null || dto.getDeliveryInfoId() == null || dto.getListOrderItemIds() == null)
             return null;
 
@@ -86,7 +95,31 @@ public class OderServiceImpl implements OrderService {
         orderItems.stream().forEach(e -> e.setOrder(newOrder));
         orderItemRepository.saveAll(orderItems);
 
-        return getMappedOrderDto(newOrder);
+        ShippingOrderDto shippingOrderDto = new ShippingOrderDto()
+                .setOrderId(newOrder.getId())
+                .setTotalCost(order.getTotalCost())
+                .setEmailAddress(order.getEmailAddress())
+                .setCity(order.getDeliveryInformation().getCity())
+                .setCountry(order.getDeliveryInformation().getCountry())
+                .setState(order.getDeliveryInformation().getState())
+                .setStreetAddress(order.getDeliveryInformation().getStreetAddress())
+                .setZipCode(order.getDeliveryInformation().getZipCode());
+
+        ShippingOrderDto newShippingOrderDto = deliverOrder(shippingOrderDto);
+        return newShippingOrderDto;
+    }
+    private ShippingOrderDto deliverOrder(ShippingOrderDto dto) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String jsonRequestBody = new Gson().toJson(dto);
+
+        HttpEntity<String> entity = new HttpEntity<String>(jsonRequestBody, headers);
+
+        ResponseEntity<ShippingOrderDto> response = restTemplate
+                .postForEntity(shippingUrl + "shipping/order", entity, ShippingOrderDto.class);
+        ShippingOrderDto shippingOrderDto = response.getBody();
+        return shippingOrderDto;
     }
 
     private OrderDto getMappedOrderDto(Order order) {

@@ -1,4 +1,4 @@
-package com.gca.shippingservice.data.dto;
+package com.gca.checkoutservice.data.dto;
 
 public class ShippingOrderDto {
     private Integer id;

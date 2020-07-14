@@ -30,8 +30,9 @@ public class OrderController {
         this.orderItemService = orderItemService;
         this.orderService = orderService;
     }
+    @CrossOrigin
     @PostMapping
-    public ResponseEntity<OrderDto> checkout(@RequestBody CheckoutOrderDto dto) throws Exception {
+    public ResponseEntity<ShippingOrderDto> checkout(@RequestBody CheckoutOrderDto dto) throws Exception {
         CreditCardDto creditCardDto = new CreditCardDto()
                 .setCreditCardCvv(dto.getCreditCardCvv())
                 .setCreditCardMonth(dto.getCreditCardMonth())
@@ -59,9 +60,9 @@ public class OrderController {
                 .setCreditCardId(creditCardDto.getId())
                 .setDeliveryInfoId(deliveryDto.getId())
                 .setListOrderItemIds(orderItemDtoList.stream().map(OrderItemDto::getId).collect(Collectors.toList()));
-        orderDto = orderService.createOrder(orderDto);
+        ShippingOrderDto shippingOrderDto = orderService.createOrder(orderDto);
 
-        return orderDto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(orderDto);
+        return shippingOrderDto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(shippingOrderDto);
     }
 
     @PostMapping("/credit-card")
@@ -83,8 +84,8 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<OrderDto> addOrderItem(@RequestBody OrderDto orderDto) throws JsonProcessingException {
-        OrderDto dto = orderService.createOrder(orderDto);
+    public ResponseEntity<ShippingOrderDto> addOrder(@RequestBody OrderDto orderDto) throws JsonProcessingException {
+        ShippingOrderDto dto = orderService.createOrder(orderDto);
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 

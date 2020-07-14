@@ -24,12 +24,14 @@ public class CatalogController {
         return ResponseEntity.of(Optional.of(this.productService.getAll()));
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     ResponseEntity<ProductDto> getProductById(@PathVariable int id) {
         ProductDto productDto = this.productService.getProductById(id);
         return productDto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(productDto);
     }
 
+    @CrossOrigin
     @PostMapping("/product")
     ResponseEntity<List<ProductDto>> getProductsByIds(@RequestBody List<Integer> ids) {
         List<ProductDto> productDtos = this.productService.getProductsByIds(ids);

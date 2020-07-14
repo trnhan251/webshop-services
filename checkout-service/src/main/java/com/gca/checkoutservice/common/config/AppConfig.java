@@ -1,4 +1,4 @@
-package com.gca.checkoutservice.config;
+package com.gca.checkoutservice.common.config;
 
 import com.gca.checkoutservice.data.dto.CreditCardDto;
 import com.gca.checkoutservice.data.dto.DeliveryInformationDto;

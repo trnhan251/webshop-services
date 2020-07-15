@@ -1,4 +1,4 @@
-package com.gca.cartservice.config;
+package com.gca.cartservice.common.config;
 
 import com.gca.cartservice.data.dto.OrderDto;
 import com.gca.cartservice.data.entities.Order;

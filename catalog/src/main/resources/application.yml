@@ -1,0 +1,104 @@
+server:
+  port: 9081
+  servlet.session.cookie:
+    domain: localhost
+    http-only: true
+    path: /
+
+spring.application.name: catalog
+
+spring:
+  main:
+    web-application-type: reactive
+
+
+
+spring.profiles.active: dev
+
+spring.resources.cache.cachecontrol.max-age: 600
+spring.resources.cache.cachecontrol.cache-public: true
+
+spring.datasource.url: jdbc:postgresql://localhost:5432/postgres?useSSL=false
+spring.datasource.username: postgres
+spring.datasource.password: postgres
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto: update
+spring.jpa.generate-ddl: true
+spring.jpa.show-sql: true
+
+spring.main.cloud-platform: kubernetes
+
+management.endpoint.metrics.enabled: true
+management.endpoints.web.exposure.include: '*'
+management.endpoint.prometheus.enabled: true
+management.metrics.export.prometheus.enabled: true
+management.endpoint.health.show-details: always
+
+management.health:
+  circuitbreakers.enabled: true
+  ratelimiters.enabled: true
+  diskspace.enabled: false
+
+
+logging.level.root: INFO
+
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      minimumNumberOfCalls: 10
+      waitDurationInOpenState: 20s
+      failureRateThreshold: 50
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      slidingWindowSize: 100
+  instances:
+    catalog:
+      baseConfig: default
+
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 3
+      waitDuration: 1500
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2.2
+      retryExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.util.concurrent.TimeoutException
+        - java.io.IOException
+  instances:
+    catalog:
+      baseConfig: default
+
+resilience4j.thread-pool-bulkhead:
+  configs:
+    default:
+      maxThreadPoolSize: 4
+      coreThreadPoolSize: 1
+      queueCapacity: 10
+      keepAliveDuration: 200
+  instances:
+    catalog:
+      baseConfig: default
+
+resilience4j.ratelimiter:
+  configs:
+    default:
+      registerHealthIndicator: true
+      limitForPeriod: 10
+      limitRefreshPeriod: 1s
+      timeoutDuration: 0
+  instances:
+    catalog:
+      baseConfig: default
+
+resilience4j.timelimiter:
+  configs:
+    default:
+      timeoutDuration: 5s
+      cancelRunningFuture: true
+  instances:
+    catalog:
+      baseConfig: default

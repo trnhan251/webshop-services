@@ -1,33 +1,41 @@
 package com.gca.catalog.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebFluxSecurity
 @Profile("dev")
-public class DevSecurityConfig extends WebSecurityConfigurerAdapter {
+public class DevSecurityConfig {
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("dev_u")
-                .password("{noop}dev_p")
-                .roles(""); // I don't know why, but this is required.
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        return http
+                .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/").permitAll()
+                .anyExchange().authenticated()
+                .and()
+                .httpBasic()
+                .and()
+                .formLogin().disable()
+                .build();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated()
-                .and()
-                .httpBasic();
+    @Bean
+    public MapReactiveUserDetailsService userDetailsService() {
+        UserDetails u = User.builder()
+                .username("dev_u")
+                .password("{noop}dev_p")
+                .roles("") // I don't know why, but this is required.
+                .build();
+        return new MapReactiveUserDetailsService(u);
     }
 }

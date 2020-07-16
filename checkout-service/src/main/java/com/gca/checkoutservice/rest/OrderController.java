@@ -6,6 +6,8 @@ import com.gca.checkoutservice.logic.CreditCardService;
 import com.gca.checkoutservice.logic.DeliveryInformationService;
 import com.gca.checkoutservice.logic.OrderItemService;
 import com.gca.checkoutservice.logic.OrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class OrderController {
     private final DeliveryInformationService deliveryInformationService;
     private final OrderItemService orderItemService;
     private final OrderService orderService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     public OrderController(CreditCardService creditCardService,
                            DeliveryInformationService deliveryInformationService,
@@ -33,6 +36,7 @@ public class OrderController {
     @CrossOrigin
     @PostMapping
     public ResponseEntity<ShippingOrderDto> checkout(@RequestBody CheckoutOrderDto dto) throws Exception {
+        LOGGER.info("POST - Checkout with CheckoutOrderDto");
         CreditCardDto creditCardDto = new CreditCardDto()
                 .setCreditCardCvv(dto.getCreditCardCvv())
                 .setCreditCardMonth(dto.getCreditCardMonth())
@@ -67,30 +71,35 @@ public class OrderController {
 
     @PostMapping("/credit-card")
     public ResponseEntity<CreditCardDto> addCreditCard(@RequestBody CreditCardDto creditCardDto) throws Exception {
+        LOGGER.info("POST - Add new Credit card");
         CreditCardDto dto = creditCardService.createCreditCard(creditCardDto);
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
     @PostMapping("/delivery-information")
     public ResponseEntity<DeliveryInformationDto> addDeliveryInformation(@RequestBody DeliveryInformationDto deliveryInformationDto) throws Exception {
+        LOGGER.info("POST - Add new Delivery Information");
         DeliveryInformationDto dto = deliveryInformationService.addDeliveryInformation(deliveryInformationDto);
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
     @PostMapping("/order-item")
     public ResponseEntity<OrderItemDto> addOrderItem(@RequestBody OrderItemDto orderItemDto) {
+        LOGGER.info("POST - Add new Order Item");
         OrderItemDto dto = orderItemService.addOrderItem(orderItemDto);
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
     @PostMapping("/order")
     public ResponseEntity<ShippingOrderDto> addOrder(@RequestBody OrderDto orderDto) throws JsonProcessingException {
+        LOGGER.info("POST - Add new Order");
         ShippingOrderDto dto = orderService.createOrder(orderDto);
         return dto == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(dto);
     }
 
     @PostMapping("/cost-sum-calculation")
     public ResponseEntity<Double> getCostSum(@RequestBody List<Integer> orderItemIds) throws JsonProcessingException {
+        LOGGER.info("POST - Get Cost Sum");
         Double costSum = orderItemService.getCostSumOfOrderItems(orderItemIds);
         return costSum == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(costSum);
     }

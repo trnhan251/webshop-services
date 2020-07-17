@@ -20,6 +20,9 @@ public class DevSecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeExchange()
+                .pathMatchers("/actuator/**").permitAll()
+                .and()
+                .authorizeExchange()
                 .pathMatchers("/").permitAll()
                 .anyExchange().authenticated()
                 .and()

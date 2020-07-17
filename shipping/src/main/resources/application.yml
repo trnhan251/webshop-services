@@ -7,9 +7,7 @@ spring:
   main:
     web-application-type: reactive
 
-
-
-spring.profiles.active: dev
+spring.profiles.active: no-security
 
 spring.resources.cache.cachecontrol.max-age: 600
 spring.resources.cache.cachecontrol.cache-public: true
@@ -18,14 +16,14 @@ spring.datasource.url: jdbc:postgresql://localhost:5432/postgres?useSSL=false
 spring.datasource.username: postgres
 spring.datasource.password: postgres
 spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto: create-drop
+spring.jpa.hibernate.ddl-auto: update
 spring.jpa.generate-ddl: true
 spring.jpa.show-sql: true
 
 spring.main.cloud-platform: kubernetes
 
 management.endpoint.metrics.enabled: true
-management.endpoints.web.exposure.include: '*'
+management.endpoints.web.exposure.include: "*"
 management.endpoint.prometheus.enabled: true
 management.metrics.export.prometheus.enabled: true
 management.endpoint.health.show-details: always
@@ -35,9 +33,7 @@ management.health:
   ratelimiters.enabled: true
   diskspace.enabled: false
 
-
-logging.level.root: DEBUG
-
+logging.level.root: INFO
 
 resilience4j.circuitbreaker:
   configs:
@@ -89,7 +85,7 @@ resilience4j.ratelimiter:
   configs:
     default:
       registerHealthIndicator: true
-      limitForPeriod: 10
+      limitForPeriod: 20
       limitRefreshPeriod: 1s
       timeoutDuration: 0
   instances:

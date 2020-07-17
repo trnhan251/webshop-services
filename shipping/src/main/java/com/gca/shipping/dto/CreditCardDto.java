@@ -13,19 +13,19 @@ import java.util.Date;
 public class CreditCardDto {
 
     @CreditCardNumber
-    private Long number;
+    private String number;
     @Future
     @JsonFormat(pattern = "MM/yyyy")
     private Date expire;
     @PositiveOrZero
-    @Max(value = 999)
+    @Max(value = 999, message = "[yolo] msg")
     private Integer ccv;
 
-    public Long getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Long number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

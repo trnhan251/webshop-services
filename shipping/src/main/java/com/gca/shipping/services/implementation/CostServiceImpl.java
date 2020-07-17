@@ -13,7 +13,7 @@ public class CostServiceImpl implements CostService {
     @Override
     public CostDto calc(List<BigDecimal> prices) {
         BigDecimal sum = prices.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-
+        System.out.println("calcing");
         CostDto costDto = new CostDto();
         costDto.setTotal(sum);
 

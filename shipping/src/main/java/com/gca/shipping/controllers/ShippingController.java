@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.Duration;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
-//@Validated()
+@Validated()
 public class ShippingController {
 
     @Autowired
@@ -73,6 +74,7 @@ public class ShippingController {
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     Mono<TrackingShippingOrderDto> postShippingOrder(
             @RequestBody
+            @Valid
             @NonNull
                     ShippingOrderDto shippingOrderDto,
             @RequestParam(value = "d", defaultValue = "0")
@@ -89,6 +91,7 @@ public class ShippingController {
 
     private static Pattern pattern = Pattern.compile("\\[([\\w\\(\\)\\.]+)\\]\\s?(.*)");
 
+    /*
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
@@ -107,4 +110,6 @@ public class ShippingController {
         ));
 
     }
+    */
+
 }

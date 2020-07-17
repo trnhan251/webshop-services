@@ -1,8 +1,10 @@
-package com.gca.cart.dto;
+package com.gca.checkout.dto;
 
 import io.micrometer.core.lang.NonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CartDto {
@@ -11,7 +13,7 @@ public class CartDto {
     private Integer id;
 
     @NonNull
-    private Set<Integer> productIds = new HashSet<>();
+    private List<Integer> productIds = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -21,11 +23,11 @@ public class CartDto {
         this.id = id;
     }
 
-    public Set<Integer> getProductIds() {
+    public List<Integer> getProductIds() {
         return productIds;
     }
 
-    public void setProductIds(Set<Integer> productIds) {
+    public void setProductIds(List<Integer> productIds) {
         this.productIds = productIds;
     }
 }

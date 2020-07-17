@@ -1,15 +1,13 @@
 server:
-  port: 9082
+  port: 9083
 
-spring.application.name: cart
+spring.application.name: checkout
 
 spring:
   main:
     web-application-type: reactive
 
-
-
-spring.profiles.active: dev
+spring.profiles.active: no-security
 
 spring.resources.cache.cachecontrol.max-age: 600
 spring.resources.cache.cachecontrol.cache-public: true
@@ -35,9 +33,7 @@ management.health:
   ratelimiters.enabled: true
   diskspace.enabled: false
 
-
 logging.level.root: INFO
-
 
 resilience4j.circuitbreaker:
   configs:
@@ -50,7 +46,7 @@ resilience4j.circuitbreaker:
       slidingWindowType: TIME_BASED
       slidingWindowSize: 100
   instances:
-    cart:
+    checkout:
       baseConfig: default
 
 resilience4j.retry:
@@ -65,7 +61,7 @@ resilience4j.retry:
         - java.util.concurrent.TimeoutException
         - java.io.IOException
   instances:
-    cart:
+    checkout:
       baseConfig: default
 
 resilience4j.thread-pool-bulkhead:
@@ -76,18 +72,18 @@ resilience4j.thread-pool-bulkhead:
       queueCapacity: 10
       keepAliveDuration: 200
   instances:
-    cart:
+    checkout:
       baseConfig: default
 
 resilience4j.ratelimiter:
   configs:
     default:
       registerHealthIndicator: true
-      limitForPeriod: 10
+      limitForPeriod: 50
       limitRefreshPeriod: 1s
       timeoutDuration: 0
   instances:
-    cart:
+    checkout:
       baseConfig: default
 
 resilience4j.timelimiter:
@@ -96,5 +92,5 @@ resilience4j.timelimiter:
       timeoutDuration: 5s
       cancelRunningFuture: true
   instances:
-    cart:
+    checkout:
       baseConfig: default

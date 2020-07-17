@@ -1,4 +1,4 @@
-package com.gca.cart.configuration;
+package com.gca.checkout.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

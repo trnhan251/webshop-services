@@ -1,6 +1,5 @@
-package com.gca.cart.configuration;
+package com.gca.checkout.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -13,17 +12,11 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 @EnableWebFluxSecurity
-@Profile("production")
-public class ProdSecurityConfig {
-
-    @Value("${WEBSHOP_CATALOG_AUTH_USERNAME}")
-    private String username;
-
-    @Value("${WEBSHOP_CATALOG_AUTH_PASSWORD}")
-    private String password;
+@Profile("dev")
+public class DevSecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf().disable()
                 .authorizeExchange()
@@ -37,10 +30,10 @@ public class ProdSecurityConfig {
     }
 
     @Bean
-    public MapReactiveUserDetailsService userDetailsService(){
+    public MapReactiveUserDetailsService userDetailsService() {
         UserDetails u = User.builder()
-                .username(username)
-                .password("{noop}"+password)
+                .username("dev_u")
+                .password("{noop}dev_p")
                 .roles("") // I don't know why, but this is required.
                 .build();
         return new MapReactiveUserDetailsService(u);

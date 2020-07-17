@@ -1,6 +1,5 @@
-package com.gca.cart.dto;
+package com.gca.checkout.dto;
 
-import java.util.List;
 import java.util.Map;
 
 public class BadRequestDto {

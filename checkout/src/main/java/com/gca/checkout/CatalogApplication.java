@@ -2,12 +2,14 @@ package com.gca.checkout;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 @SpringBootApplication
-public class CheckoutApplication {
+@EnableWebFlux
+public class CatalogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CheckoutApplication.class, args);
+		SpringApplication.run(CatalogApplication.class, args);
 	}
 
 }

@@ -27,9 +27,12 @@ public class ProdSecurityConfig {
     private String password;
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/actuator/**").permitAll()
+                .and()
                 .authorizeExchange()
                 .pathMatchers("/").permitAll()
                 .anyExchange().authenticated()

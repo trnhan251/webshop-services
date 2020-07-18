@@ -25,5 +25,4 @@ spec:
 {{ include "webshop.auth.env.cart" . | indent 10 }}
 {{ include "webshop.auth.env.catalog" . | indent 10 }}
 {{ include "webshop.auth.env.checkout" . | indent 10 }}
-{{ include "webshop.env.spring.profiles.active" . | indent 10 }}
 {{ include "webshop.env.host" . | indent 10 }}

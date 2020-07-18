@@ -1,6 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
   name: {{ template "webshop.fullname" . }}-ingress
   labels: {{ include "webshop.labels" . | nindent 4 }}
     app.kubernetes.io/component: ingress
@@ -25,3 +27,5 @@ spec:
             backend:
               serviceName: {{ template "shipping.fullname" . }}
               servicePort: {{ .Values.shipping.service.port }}
+
+---

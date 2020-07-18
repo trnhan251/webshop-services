@@ -1,6 +1,6 @@
 package com.gca.checkout.dto;
 
-public class UserInfoDto {
+public class CheckoutDto {
 
     private Integer cartId;
     private AddressDto address;

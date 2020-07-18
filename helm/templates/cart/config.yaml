@@ -1,0 +1,118 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ template "cart.fullname" . }}-config
+  namespace: {{ .Release.Namespace }}
+data:
+  application.yml: |
+    server:
+      port: {{ .Values.cart.port }}
+
+    spring:
+      application.name: cart
+      main:
+        web-application-type: reactive
+        cloud-platform: kubernetes
+      profiles.active: production
+
+      #resources.cache.cachecontrol:
+      #  max-age: 600
+      #  cache-public: true
+
+      datasource:
+        url: jdbc:postgresql://${WEBSHOP_DB_HOST}:${WEBSHOP_DB_PORT}/${WEBSHOP_DB_DB}?useSSL=false&currentSchema=${WEBSHOP_CART_DB_SCHEMA}
+        username: ${WEBSHOP_CART_DB_USERNAME}
+        password: ${WEBSHOP_CART_DB_PASSWORD}
+      jpa:
+        properties.hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          default_schema=${WEBSHOP_CART_DB_SCHEMA}
+        hibernate.ddl-auto: update
+        generate-ddl: true
+        show-sql: false
+
+    management:
+      server.port: {{ .Values.cart.managementPort }}
+      endpoint:
+        metrics:
+          enabled: true
+        prometheus.enabled: true
+        health.show-details: always
+      metrics.export.prometheus.enabled: true
+      endpoints.web.exposure.include: "*"
+      health:
+        circuitbreakers.enabled: true
+        ratelimiters.enabled: true
+        diskspace.enabled: false
+      security.enabled: false
+
+    logging.level.root: {{ .Values.cart.loglevel }}
+
+    resilience4j:
+      circuitbreaker:
+        configs:
+          default:
+            registerHealthIndicator: true
+            minimumNumberOfCalls: 10
+            waitDurationInOpenState: 20s
+            failureRateThreshold: 50
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            slidingWindowSize: 100
+            recordExceptions:
+              - org.springframework.web.client.HttpServerErrorException
+              - java.util.concurrent.TimeoutException
+              - java.io.IOException
+        instances:
+          cart:
+            baseConfig: default
+{{ .Values.cart.resilience4j.circuitbreaker.cart | toYaml | indent 12 }}
+
+      retry:
+        configs:
+          default:
+            maxRetryAttempts: 3
+            waitDuration: 1500
+            enableExponentialBackoff: true
+            exponentialBackoffMultiplier: 2.2
+            retryExceptions:
+              - org.springframework.web.client.HttpServerErrorException
+              - java.io.IOException
+        instances:
+          cart:
+            baseConfig: default
+{{ .Values.cart.resilience4j.retry.cart | toYaml | indent 12 }}
+
+      thread-pool-bulkhead:
+        configs:
+          default:
+            maxThreadPoolSize: 4
+            coreThreadPoolSize: 1
+            queueCapacity: 10
+            keepAliveDuration: 200
+        instances:
+          cart:
+            baseConfig: default
+{{ .Values.cart.resilience4j.thread-pool-bulkhead.cart | toYaml | indent 12 }}
+
+      ratelimiter:
+        configs:
+          default:
+            registerHealthIndicator: true
+            limitForPeriod: 10
+            limitRefreshPeriod: 1s
+            timeoutDuration: 0
+        instances:
+          cart:
+            baseConfig: default
+{{ .Values.cart.resilience4j.ratelimiter.cart | toYaml | indent 12 }}
+
+      timelimiter:
+        configs:
+          default:
+            timeoutDuration: 5s
+            cancelRunningFuture: true
+        instances:
+          cart:
+            baseConfig: default
+{{ .Values.cart.resilience4j.timelimiter.cart | toYaml | indent 12 }}

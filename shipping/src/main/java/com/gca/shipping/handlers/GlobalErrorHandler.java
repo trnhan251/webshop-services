@@ -34,7 +34,7 @@ public class GlobalErrorHandler extends DefaultErrorAttributes {
 
         Throwable err = getError(request);
 
-        logger.error("Bad Request");
+        logger.error("Bad Request",err);
         System.out.println(err.getClass().getName());
         if (err instanceof ConstraintViolationException) {
             ConstraintViolationException constraintViolationException = (ConstraintViolationException) err;

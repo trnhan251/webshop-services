@@ -3,6 +3,7 @@ package com.gca.checkout.services;
 import com.gca.checkout.dto.CartDto;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 import java.io.IOException;
 
@@ -11,6 +12,6 @@ public interface CartService {
 
     public interface Client{
         @GET("/{id}")
-        Call<CartDto> getCart(Integer id);
+        Call<CartDto> getCart(@Path("id") Integer id);
     }
 }

@@ -1,6 +1,5 @@
 package com.gca.cart.controllers;
 
-import com.gca.cart.dto.BadRequestDto;
 import com.gca.cart.dto.CartDto;
 import com.gca.cart.repositories.CartRepository;
 import com.gca.cart.services.CartService;
@@ -11,21 +10,16 @@ import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.micrometer.core.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.time.Duration;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/")
@@ -59,8 +53,8 @@ public class CartController {
                     Long d
     ) {
         return Mono
-                .just(cartService.getCart(id.orElse(-1)))
-                .delayElement(Duration.ofMillis(d));
+                .delay(Duration.ofMillis(d))
+                .just(cartService.getCart(id.orElse(-1)));
     }
 
     @Retry(name = RESILIENCE_INSTANCE_NAME)
@@ -84,8 +78,8 @@ public class CartController {
     ) {
 
         return Mono
-                .just(cartService.putCart(id, prodcutIds))
-                .delayElement(Duration.ofMillis(d));
+                .delay(Duration.ofMillis(d))
+                .just(cartService.putCart(id, prodcutIds));
     }
 
     @Retry(name = RESILIENCE_INSTANCE_NAME)
@@ -106,28 +100,7 @@ public class CartController {
     ) {
 
         return Mono
-                .just(cartService.emptyCart(id))
-                .delayElement(Duration.ofMillis(d));
-    }
-
-    private static Pattern pattern = Pattern.compile("\\[([\\w\\(\\)\\.]+)\\]\\s?(.*)");
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
-    public Mono<BadRequestDto> constraintViolationHandler(ConstraintViolationException e) {
-
-        return Mono.just(new BadRequestDto(
-                e.getConstraintViolations().stream()
-                        .map(v -> {
-                            Matcher matcher = pattern.matcher(v.getMessage());
-                            return new AbstractMap.SimpleEntry<>(
-                                    matcher.group(1),
-                                    matcher.group(2)
-                            );
-                        })
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-        ));
-
+                .delay(Duration.ofMillis(d))
+                .just(cartService.emptyCart(id));
     }
 }

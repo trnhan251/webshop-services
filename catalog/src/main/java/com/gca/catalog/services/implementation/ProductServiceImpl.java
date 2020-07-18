@@ -37,6 +37,13 @@ public class ProductServiceImpl implements ProductService {
         return  product.isPresent() ? Optional.of(getMappedProductDto(product.get())) : Optional.empty();
     }
 
+    @Override
+    public List<ProductDto> collect(List<Integer> ids) {
+        return repository.findAllById(ids).stream()
+        .map(this::getMappedProductDto)
+        .collect(Collectors.toList());
+    }
+
     private ProductDto getMappedProductDto(Product product) {
         return modelMapper.map(product, ProductDto.class);
     }

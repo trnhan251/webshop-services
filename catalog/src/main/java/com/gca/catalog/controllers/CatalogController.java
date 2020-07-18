@@ -22,6 +22,7 @@ import reactor.core.publisher.Mono;
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
@@ -53,13 +54,13 @@ public class CatalogController {
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<List<ProductDto>> getAllProducts(
             @RequestParam(value = "d", defaultValue = "0")
-            @Min(value = 0, message = DelayService.MESSAGE)
-            @Max(value = 10000, message = DelayService.MESSAGE)
+            @Min(value = 0, message = "DelayService.MESSAGE")
+            @Max(value = 10000, message = "DelayService.MESSAGE")
                     Long d
     ) {
         return Mono
-                .just(productService.getAll())
-                .delayElement(Duration.ofMillis(d));
+                .delay(Duration.ofMillis(d))
+                .just(productService.getAll());
     }
 
     @Retry(name = RESILIENCE_INSTANCE_NAME)
@@ -73,22 +74,34 @@ public class CatalogController {
             @PathVariable
                     int id,
             @RequestParam(value = "d", defaultValue = "0")
-            @Min(value = 0, message = DelayService.MESSAGE)
-            @Max(value = 10000, message = DelayService.MESSAGE)
+            @Min(value = 0, message = "DelayService.MESSAGE")
+            @Max(value = 10000, message = "DelayService.MESSAGE")
+                    Long d
+    ) {
+        return Mono
+                .delay(Duration.ofMillis(d))
+                .just(ResponseEntity.of(productService.getProductById(id)))                ;
+    }
+
+    @Retry(name = RESILIENCE_INSTANCE_NAME)
+    @CircuitBreaker(name = RESILIENCE_INSTANCE_NAME)
+    @RateLimiter(name = RESILIENCE_INSTANCE_NAME)
+    @TimeLimiter(name = RESILIENCE_INSTANCE_NAME)
+    @Bulkhead(name = RESILIENCE_INSTANCE_NAME)
+    @CrossOrigin
+    @PostMapping(value = "/collect", produces = MediaType.APPLICATION_JSON_VALUE)
+    Mono<List<ProductDto>> collectProductsById(
+            @RequestBody
+            @NotNull
+                    List<@NotNull Integer> ids,
+            @RequestParam(value = "d", defaultValue = "0")
+            @Min(value = 0, message = "...")
+            @Max(value = 10000, message = "...")
                     Long d
     ) {
 
-        Optional<ProductDto> productDto = this.productService.getProductById(id);
-        ResponseEntity<ProductDto> re = productDto.isPresent() ? ResponseEntity.ok(productDto.get()) : ResponseEntity.notFound().build();
         return Mono
-                .just(re)
-                .delayElement(Duration.ofMillis(d));
-    }
-
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseBody
-    public void constraintViolationHandler(ConstraintViolationException e) {
+                .delay(Duration.ofMillis(d))
+                .just(this.productService.collect(ids));
     }
 }

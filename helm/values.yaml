@@ -4,10 +4,6 @@ genPasswordLength: 12
 
 namespace: webshop-demo
 
-spring:
-  profiles:
-    active: dev # Possible values are: dev, production; will default to production if the value is not recognized
-
 host: webshop.example
 
 volume:
@@ -32,6 +28,8 @@ postgres:
 catalog:
   image: trnhan251/catalog-service:latest
   port: 8080
+  managementPort: 10080
+  loglevel: INFO
   service:
     port: 8080
   db:
@@ -42,9 +40,12 @@ catalog:
     username: webshop_catalog_auth_user
     password: ""
 
+  
 shipping:
   image: trnhan251/shipping-service:latest
   port: 8080
+  managementPort: 10080
+  loglevel: INFO
   service:
     port: 8080
   db:
@@ -58,6 +59,8 @@ shipping:
 cart:
   image: trnhan251/cart-service:latest
   port: 8080
+  managementPort: 10080
+  loglevel: INFO
   service:
     port: 8080
   db:
@@ -67,10 +70,17 @@ cart:
   auth:
     username: webshop_cart_auth_user
     password: ""
+  resilience4j:
+    retry:
+      cart:
+        test: 123
+        yolo: "asdf_movie"
 
 checkout:
   image: trnhan251/checkout-service:latest
   port: 8080
+  managementPort: 10080
+  loglevel: INFO
   service:
     port: 8080
   auth:

@@ -189,20 +189,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
       key: checkoutPassword
 {{- end }}
 
-{{- define "webshop.env.spring.profiles.active" -}}
-- name: WEBSHOP_SPRING_PROFILES
-  {{- $p := (default "production" .Values.spring.profiles.active) }}
-  {{- if not (has $p (list "production" "dev")) }}
-    {{- $p = "production" }}
-  {{- end }}
-  value: {{ $p }}
-{{- end }}
-
-{{- define "webshop.env.spring.show-sql" -}}
-- name: WEBSHOP_SPRING_SHOW_SQL
-  value: {{ (eq .Values.spring.profiles.active "dev") | quote }}
-{{- end }}
-
 {{- define "webshop.env.host" -}}
 - name: WEBSHOP_HOST
   value: {{ .Values.host | quote }}

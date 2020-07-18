@@ -16,16 +16,19 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Profile("production")
 public class ProdSecurityConfig {
 
-    @Value("${WEBSHOP_CATALOG_AUTH_USERNAME}")
+    @Value("${WEBSHOP_CHECKOUT_AUTH_USERNAME}")
     private String username;
 
-    @Value("${WEBSHOP_CATALOG_AUTH_PASSWORD}")
+    @Value("${WEBSHOP_CHECKOUT_AUTH_PASSWORD}")
     private String password;
 
     @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/actuator/**").permitAll()
+                .and()
                 .authorizeExchange()
                 .pathMatchers("/").permitAll()
                 .anyExchange().authenticated()

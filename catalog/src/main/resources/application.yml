@@ -6,11 +6,7 @@ spring:
   main:
     web-application-type: reactive
     cloud-platform: kubernetes
-  profiles.active: no-security
-
-  resources.cache.cachecontrol:
-    max-age: 600
-    cache-public: true
+  profiles.active: dev
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?useSSL=false
@@ -37,7 +33,7 @@ management:
     diskspace.enabled: false
   security.enabled: false
 
-logging.level.root: INFO
+logging.level.root: DEBUG
 
 resilience4j:
   circuitbreaker:

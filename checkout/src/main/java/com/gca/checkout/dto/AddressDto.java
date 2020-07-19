@@ -1,10 +1,8 @@
 package com.gca.checkout.dto;
 
-import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.PositiveOrZero;
 
-@Embeddable
 public class AddressDto {
     private String street;
     @PositiveOrZero

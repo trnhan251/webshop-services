@@ -17,21 +17,14 @@ import java.util.List;
 @Service
 public class CatalogServiceImpl implements CatalogService {
 
-    @Value("${WEBSHOP_CATALOG_AUTH_USERNAME}")
-    private String username;
-
-    @Value("${WEBSHOP_CATALOG_AUTH_PASSWORD}")
-    private String password;
-
-    @Value("${WEBSHOP_CATALOG_HOST}")
-    private String host;
-
-    @Value("${WEBSHOP_CATALOG_PORT}")
-    private String port;
-
     private CatalogService.Client client;
 
-    public CatalogServiceImpl() {
+    public CatalogServiceImpl(
+            @Value("${WEBSHOP_CATALOG_AUTH_USERNAME}")     String username,
+            @Value("${WEBSHOP_CATALOG_AUTH_PASSWORD}")     String password,
+            @Value("${WEBSHOP_CATALOG_HOST}")     String host,
+            @Value("${WEBSHOP_CATALOG_PORT}")     String port
+    ) {
 
         OkHttpClient okHttp = new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuthInterceptor(username,password))

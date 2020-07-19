@@ -1,34 +1,22 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: {{ template "cart.fullname" . }}-config
+  name: {{ template "checkout.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
 data:
   applicationYml: |
     server:
-      port: {{ .Values.cart.port }}
+      port: {{ .Values.checkout.port }}
 
     spring:
-      application.name: cart
+      application.name: checkout
       main:
         web-application-type: reactive
         cloud-platform: kubernetes
       profiles.active: production
 
-      datasource:
-        url: jdbc:postgresql://${WEBSHOP_DB_HOST}:${WEBSHOP_DB_PORT}/${WEBSHOP_DB_DB}?useSSL=false&currentSchema=${WEBSHOP_CART_DB_SCHEMA}
-        username: ${WEBSHOP_CART_DB_USERNAME}
-        password: ${WEBSHOP_CART_DB_PASSWORD}
-      jpa:
-        properties.hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
-          default_schema: ${WEBSHOP_CART_DB_SCHEMA}
-        hibernate.ddl-auto: update
-        generate-ddl: true
-        show-sql: false
-
     management:
-      server.port: {{ .Values.cart.managementPort | int }}
+      server.port: {{ .Values.checkout.managementPort | int }}
       endpoint:
         metrics:
           enabled: true
@@ -42,7 +30,7 @@ data:
         diskspace.enabled: false
       security.enabled: false
 
-    logging.level.root: {{ .Values.cart.loglevel }}
+    logging.level.root: {{ .Values.checkout.loglevel }}
 
     resilience4j:
       circuitbreaker:
@@ -60,9 +48,9 @@ data:
               - java.util.concurrent.TimeoutException
               - java.io.IOException
         instances:
-          cart:
+          checkout:
             baseConfig: default
-{{ include "cart.r4j.circuitbreaker.cart" . | indent 12 }}
+{{ include "checkout.r4j.circuitbreaker.checkout" . | indent 12 }}
 
       retry:
         configs:
@@ -75,9 +63,9 @@ data:
               - org.springframework.web.client.HttpServerErrorException
               - java.io.IOException
         instances:
-          cart:
+          checkout:
             baseConfig: default
-{{ include "cart.r4j.retry.cart" . | indent 12 }}
+{{ include "checkout.r4j.retry.checkout" . | indent 12 }}
 
       thread-pool-bulkhead:
         configs:
@@ -87,9 +75,9 @@ data:
             queueCapacity: 10
             keepAliveDuration: 200
         instances:
-          cart:
+          checkout:
             baseConfig: default
-{{ include "cart.r4j.thread_pool_bulkhead.cart" . | indent 12 }}
+{{ include "checkout.r4j.thread_pool_bulkhead.checkout" . | indent 12 }}
 
       ratelimiter:
         configs:
@@ -99,9 +87,9 @@ data:
             limitRefreshPeriod: 1s
             timeoutDuration: 0
         instances:
-          cart:
+          checkout:
             baseConfig: default
-{{ include "cart.r4j.ratelimiter.cart" . | indent 12 }}
+{{ include "checkout.r4j.ratelimiter.checkout" . | indent 12 }}
 
       timelimiter:
         configs:
@@ -109,6 +97,6 @@ data:
             timeoutDuration: 5s
             cancelRunningFuture: true
         instances:
-          cart:
+          checkout:
             baseConfig: default
-{{ include "cart.r4j.timelimiter.cart" . | indent 12 }}
+{{ include "checkout.r4j.timelimiter.checkout" . | indent 12 }}

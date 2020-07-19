@@ -3,13 +3,11 @@ package com.gca.checkout.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-import javax.persistence.Embeddable;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
 
-@Embeddable
 public class CreditCardDto {
 
     @CreditCardNumber(ignoreNonDigitCharacters = true)

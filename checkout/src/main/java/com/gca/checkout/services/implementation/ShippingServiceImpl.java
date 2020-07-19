@@ -17,26 +17,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.IOException;
 
 @Service
-public class ShippingServiceImpl implements ShippingService{
-
-    @Value("${WEBSHOP_SHIPPING_AUTH_USERNAME}")
-    private String username;
-
-    @Value("${WEBSHOP_SHIPPING_AUTH_PASSWORD}")
-    private String password;
-
-    @Value("${WEBSHOP_SHIPPING_HOST}")
-    private String host;
-
-    @Value("${WEBSHOP_SHIPPING_PORT}")
-    private String port;
+public class ShippingServiceImpl implements ShippingService {
 
     private ShippingService.Client client;
 
-    public ShippingServiceImpl() {
+    public ShippingServiceImpl(
+            @Value("${WEBSHOP_SHIPPING_AUTH_USERNAME}") String username,
+            @Value("${WEBSHOP_SHIPPING_AUTH_PASSWORD}") String password,
+            @Value("${WEBSHOP_SHIPPING_HOST}") String host,
+            @Value("${WEBSHOP_SHIPPING_PORT}") String port
+    ) {
 
         OkHttpClient okHttp = new OkHttpClient.Builder()
-                .addInterceptor(new BasicAuthInterceptor(username,password))
+                .addInterceptor(new BasicAuthInterceptor(username, password))
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()

@@ -2,10 +2,8 @@ package com.gca.checkout.dto;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 
-@Embeddable
 public class ProductDto {
 
     private Integer id;

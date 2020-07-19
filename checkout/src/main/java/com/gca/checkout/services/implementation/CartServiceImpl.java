@@ -15,24 +15,18 @@ import java.io.IOException;
 @Service
 public class CartServiceImpl implements CartService {
 
-    @Value("${WEBSHOP_CART_AUTH_USERNAME}")
-    private String username;
-
-    @Value("${WEBSHOP_CART_AUTH_PASSWORD}")
-    private String password;
-
-    @Value("${WEBSHOP_CART_HOST}")
-    private String host;
-
-    @Value("${WEBSHOP_CART_PORT}")
-    private String port;
 
     private CartService.Client client;
 
-    public CartServiceImpl() {
+    public CartServiceImpl(
+            @Value("${WEBSHOP_CART_AUTH_USERNAME}") String username,
+            @Value("${WEBSHOP_CART_AUTH_PASSWORD}") String password,
+            @Value("${WEBSHOP_CART_HOST}") String host,
+            @Value("${WEBSHOP_CART_PORT}") String port
+    ) {
 
         OkHttpClient okHttp = new OkHttpClient.Builder()
-                .addInterceptor(new BasicAuthInterceptor(username,password))
+                .addInterceptor(new BasicAuthInterceptor(username, password))
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()

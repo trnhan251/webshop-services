@@ -1,34 +1,38 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: {{ template "cart.fullname" . }}-config
+  name: {{ template "catalog.fullname" . }}-config
   namespace: {{ .Release.Namespace }}
 data:
   applicationYml: |
     server:
-      port: {{ .Values.cart.port }}
+      port: {{ .Values.catalog.port }}
 
     spring:
-      application.name: cart
+      application.name: catalog
       main:
         web-application-type: reactive
         cloud-platform: kubernetes
       profiles.active: production
 
+      resources.cache.cachecontrol:
+        max-age: 600
+        cache-public: true
+
       datasource:
-        url: jdbc:postgresql://${WEBSHOP_DB_HOST}:${WEBSHOP_DB_PORT}/${WEBSHOP_DB_DB}?useSSL=false&currentSchema=${WEBSHOP_CART_DB_SCHEMA}
-        username: ${WEBSHOP_CART_DB_USERNAME}
-        password: ${WEBSHOP_CART_DB_PASSWORD}
+        url: jdbc:postgresql://${WEBSHOP_DB_HOST}:${WEBSHOP_DB_PORT}/${WEBSHOP_DB_DB}?useSSL=false&currentSchema=${WEBSHOP_CATALOG_DB_SCHEMA}
+        username: ${WEBSHOP_CATALOG_DB_USERNAME}
+        password: ${WEBSHOP_CATALOG_DB_PASSWORD}
       jpa:
         properties.hibernate:
           dialect: org.hibernate.dialect.PostgreSQLDialect
-          default_schema: ${WEBSHOP_CART_DB_SCHEMA}
+          default_schema: ${WEBSHOP_CATALOG_DB_SCHEMA}
         hibernate.ddl-auto: update
         generate-ddl: true
         show-sql: false
 
     management:
-      server.port: {{ .Values.cart.managementPort | int }}
+      server.port: {{ .Values.catalog.managementPort | int }}
       endpoint:
         metrics:
           enabled: true
@@ -42,7 +46,7 @@ data:
         diskspace.enabled: false
       security.enabled: false
 
-    logging.level.root: {{ .Values.cart.loglevel }}
+    logging.level.root: {{ .Values.catalog.loglevel }}
 
     resilience4j:
       circuitbreaker:
@@ -60,9 +64,9 @@ data:
               - java.util.concurrent.TimeoutException
               - java.io.IOException
         instances:
-          cart:
+          catalog:
             baseConfig: default
-{{ include "cart.r4j.circuitbreaker.cart" . | indent 12 }}
+{{ include "catalog.r4j.circuitbreaker.catalog" . | indent 12 }}
 
       retry:
         configs:
@@ -75,9 +79,9 @@ data:
               - org.springframework.web.client.HttpServerErrorException
               - java.io.IOException
         instances:
-          cart:
+          catalog:
             baseConfig: default
-{{ include "cart.r4j.retry.cart" . | indent 12 }}
+{{ include "catalog.r4j.retry.catalog" . | indent 12 }}
 
       thread-pool-bulkhead:
         configs:
@@ -87,9 +91,9 @@ data:
             queueCapacity: 10
             keepAliveDuration: 200
         instances:
-          cart:
+          catalog:
             baseConfig: default
-{{ include "cart.r4j.thread_pool_bulkhead.cart" . | indent 12 }}
+{{ include "catalog.r4j.thread_pool_bulkhead.catalog" . | indent 12 }}
 
       ratelimiter:
         configs:
@@ -99,9 +103,9 @@ data:
             limitRefreshPeriod: 1s
             timeoutDuration: 0
         instances:
-          cart:
+          catalog:
             baseConfig: default
-{{ include "cart.r4j.ratelimiter.cart" . | indent 12 }}
+{{ include "catalog.r4j.ratelimiter.catalog" . | indent 12 }}
 
       timelimiter:
         configs:
@@ -109,6 +113,6 @@ data:
             timeoutDuration: 5s
             cancelRunningFuture: true
         instances:
-          cart:
+          catalog:
             baseConfig: default
-{{ include "cart.r4j.timelimiter.cart" . | indent 12 }}
+{{ include "catalog.r4j.timelimiter.catalog" . | indent 12 }}

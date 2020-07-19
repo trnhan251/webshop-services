@@ -10,6 +10,10 @@ spec:
   replicas: 1
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: {{ .Values.cart.managementPort | quote }}
       name: {{ template "cart.fullname" . }}
       namespace: {{ .Release.Namespace }}
       labels: {{ include "cart.labels" . | nindent 8 }}
@@ -18,10 +22,32 @@ spec:
       - name: {{ template "cart.fullname" . }}
         image: {{ .Values.cart.image }}
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: {{ .Values.cart.managementPort | int }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: {{ .Values.cart.managementPort | int }}
+          initialDelaySeconds: 3
+          periodSeconds: 3
         ports:
         - containerPort: {{ .Values.cart.port | int }}
+        volumeMounts:
+        - name: {{ template "cart.fullname" . }}-application-yml
+          mountPath: /app/config
         env: 
 {{ include "webshop.db.env.secrets.cart" . | indent 10 }} 
 {{ include "webshop.db.env.connection" . | indent 10 }}
 {{ include "webshop.auth.env.cart" . | indent 10 }}
 {{ include "webshop.env.host" . | indent 10 }}
+      volumes:
+        - name: {{ template "cart.fullname" . }}-application-yml
+          configMap:
+            name: {{ template "cart.fullname" . }}-config
+            items:
+            - key: applicationYml
+              path: application.yml

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
@@ -27,11 +28,9 @@ public class ProdSecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeExchange()
+                .pathMatchers(HttpMethod.OPTIONS).permitAll()
                 .pathMatchers("/actuator/**").permitAll()
-                .and()
-                .authorizeExchange()
-                .pathMatchers("/").permitAll()
-                .anyExchange().authenticated()
+                .pathMatchers("/**").authenticated()
                 .and()
                 .httpBasic()
                 .and()

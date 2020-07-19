@@ -1,0 +1,42 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.1.RELEASE)
+
+2020-07-18 15:37:27.726  INFO 1 --- [           main] com.gca.checkout.CatalogApplication      : Starting CatalogApplication v0.0.1-SNAPSHOT on test-checkout-5c7ddb94c7-92db5 with PID 1 (/app/backend.jar started by root in /app)
+2020-07-18 15:37:27.733  INFO 1 --- [           main] com.gca.checkout.CatalogApplication      : The following profiles are active: production
+2020-07-18 15:37:30.564  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:37:30.677  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.678  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:37:30.681  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.788  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.798  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:37:30.802  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.892  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.897  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:37:30.898  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.983  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:30.984  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:37:30.985  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:31.034  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:31.035  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:37:31.036  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:37:33.171  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-07-18 15:37:33.187  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-07-18 15:37:33.189  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by retrofit2.Platform (jar:file:/app/backend.jar!/BOOT-INF/lib/retrofit-2.9.0.jar!/) to constructor java.lang.invoke.MethodHandles$Lookup(java.lang.Class,int)
+WARNING: Please consider reporting this to the maintainers of retrofit2.Platform
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+2020-07-18 15:37:39.457  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-07-18 15:37:39.625  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 10080 (http)
+2020-07-18 15:37:39.627  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-07-18 15:37:39.628  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-07-18 15:37:39.714  INFO 1 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 24 endpoint(s) beneath base path '/actuator'
+2020-07-18 15:37:39.975  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 10080 (http) with context path ''
+2020-07-18 15:37:40.041  INFO 1 --- [           main] com.gca.checkout.CatalogApplication      : Started CatalogApplication in 13.901 seconds (JVM running for 15.906)

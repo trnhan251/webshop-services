@@ -2,11 +2,9 @@ package com.gca.checkout.dto;
 
 import org.springframework.format.annotation.NumberFormat;
 
-import javax.persistence.Embeddable;
 import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 
-@Embeddable
 public class CostDto {
 
     @PositiveOrZero

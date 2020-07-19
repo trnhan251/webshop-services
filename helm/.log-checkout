@@ -1,0 +1,88 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.1.RELEASE)
+
+2020-07-18 15:27:12.406  INFO 1 --- [           main] com.gca.checkout.CatalogApplication      : Starting CatalogApplication v0.0.1-SNAPSHOT on test-checkout-5c7ddb94c7-zxk5j with PID 1 (/app/backend.jar started by root in /app)
+2020-07-18 15:27:12.409  INFO 1 --- [           main] com.gca.checkout.CatalogApplication      : The following profiles are active: production
+2020-07-18 15:27:13.457  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:27:13.479  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.480  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:27:13.481  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.515  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.516  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:27:13.517  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.541  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.542  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:27:13.542  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.563  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.564  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:27:13.564  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.580  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:13.581  INFO 1 --- [           main] i.g.r.utils.RxJava2OnClasspathCondition  : RxJava2 related Aspect extensions are not activated, because RxJava2 is not on the classpath.
+2020-07-18 15:27:13.582  INFO 1 --- [           main] i.g.r.utils.AspectJOnClasspathCondition  : Aspects are not activated because AspectJ is not on the classpath.
+2020-07-18 15:27:14.418  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-07-18 15:27:14.428  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-07-18 15:27:14.428  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by retrofit2.Platform (jar:file:/app/backend.jar!/BOOT-INF/lib/retrofit-2.9.0.jar!/) to constructor java.lang.invoke.MethodHandles$Lookup(java.lang.Class,int)
+WARNING: Please consider reporting this to the maintainers of retrofit2.Platform
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+2020-07-18 15:27:14.761  WARN 1 --- [           main] onfigReactiveWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'shippingServiceImpl' defined in URL [jar:file:/app/backend.jar!/BOOT-INF/classes!/com/gca/checkout/services/implementation/ShippingServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.gca.checkout.services.implementation.ShippingServiceImpl]: Constructor threw exception; nested exception is java.lang.IllegalArgumentException: Invalid URL port: "null"
+2020-07-18 15:27:14.764  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2020-07-18 15:27:14.787  INFO 1 --- [           main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-07-18 15:27:14.791 ERROR 1 --- [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'shippingServiceImpl' defined in URL [jar:file:/app/backend.jar!/BOOT-INF/classes!/com/gca/checkout/services/implementation/ShippingServiceImpl.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.gca.checkout.services.implementation.ShippingServiceImpl]: Constructor threw exception; nested exception is java.lang.IllegalArgumentException: Invalid URL port: "null"
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1320) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1214) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:557) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:226) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:893) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:879) ~[spring-context-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:551) ~[spring-context-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:62) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226) ~[spring-boot-2.3.1.RELEASE.jar!/:2.3.1.RELEASE]
+	at com.gca.checkout.CatalogApplication.main(CatalogApplication.java:12) ~[classes!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:567) ~[na:na]
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49) ~[backend.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:109) ~[backend.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58) ~[backend.jar:0.0.1-SNAPSHOT]
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:88) ~[backend.jar:0.0.1-SNAPSHOT]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.gca.checkout.services.implementation.ShippingServiceImpl]: Constructor threw exception; nested exception is java.lang.IllegalArgumentException: Invalid URL port: "null"
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:217) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:87) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1312) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	... 26 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Invalid URL port: "null"
+	at okhttp3.HttpUrl$Builder.parse(HttpUrl.java:1394) ~[okhttp-3.14.9.jar!/:na]
+	at okhttp3.HttpUrl.get(HttpUrl.java:917) ~[okhttp-3.14.9.jar!/:na]
+	at retrofit2.Retrofit$Builder.baseUrl(Retrofit.java:506) ~[retrofit-2.9.0.jar!/:na]
+	at com.gca.checkout.services.implementation.ShippingServiceImpl.<init>(ShippingServiceImpl.java:43) ~[classes!/:0.0.1-SNAPSHOT]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:500) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:481) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:204) ~[spring-beans-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+	... 28 common frames omitted
+

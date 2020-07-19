@@ -2,30 +2,32 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/ssl-redirect: "false"
   name: {{ template "webshop.fullname" . }}-ingress
   labels: {{ include "webshop.labels" . | nindent 4 }}
     app.kubernetes.io/component: ingress
 spec:
   rules:
-    - host: {{ .Values.host }}
-      http:
-        paths:
-          - path: /api/cart
-            backend:
-              serviceName: {{ template "cart.fullname" . }}
-              servicePort: {{ .Values.cart.service.port }}
-          - path: /api/catalog
-            backend:
-              serviceName: {{ template "catalog.fullname" . }}
-              servicePort: {{ .Values.catalog.service.port }}
-          - path: /api/checkout
-            backend:
-              serviceName: {{ template "checkout.fullname" . }}
-              servicePort: {{ .Values.checkout.service.port }}
-          - path: /api/shipping
-            backend:
-              serviceName: {{ template "shipping.fullname" . }}
-              servicePort: {{ .Values.shipping.service.port }}
+  - host: {{ .Values.host }}
+    http:
+      paths:
+      - path: /api/catalog(/|$)(.*)
+        backend:
+          serviceName: {{ template "catalog.fullname" . }}
+          servicePort: {{ .Values.catalog.service.port }}
+      - path: /api/cart(/|$)(.*)
+        backend:
+          serviceName: {{ template "cart.fullname" . }}
+          servicePort: {{ .Values.cart.service.port }}
 
----
+      - path: /api/checkout(/|$)(.*)
+        backend:
+          serviceName: {{ template "checkout.fullname" . }}
+          servicePort: {{ .Values.checkout.service.port }}
+      - path: /api/shipping(/|$)(.*)
+        backend:
+          serviceName: {{ template "shipping.fullname" . }}
+          servicePort: {{ .Values.shipping.service.port }}

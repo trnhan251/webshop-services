@@ -36,6 +36,9 @@ spec:
           periodSeconds: 3
         ports:
         - containerPort: {{ .Values.catalog.port | int }}
+        resources:
+          requests:
+            cpu: 500m
         volumeMounts:
         - name: {{ template "catalog.fullname" . }}-application-yml
           mountPath: /app/config

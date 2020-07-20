@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "frontend.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "frontend.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels: {{ include "frontend.labels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      name: {{ template "frontend.fullname" . }}
+      namespace: {{ .Release.Namespace }}
+      labels: {{ include "frontend.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ template "frontend.fullname" . }}
+        image: {{ .Values.frontend.image }}
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.frontend.port | int }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: {{ .Values.frontend.port | int }}
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        ports:
+        - containerPort: {{ .Values.frontend.port | int }}

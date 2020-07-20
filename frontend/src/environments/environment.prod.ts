@@ -2,24 +2,24 @@ export const environment = {
   production: true,
 
   cart: {
-    url: "http://${WEBSHOP_CART_HOST}:${WEBSHOP_CART_PORT}",
-    username: "${WEBSHOP_CART_AUTH_USERNAME}",
-    password: "${WEBSHOP_CART_AUTH_PASSWORD}"
+    url: "http://control-plane.minikube.internal/api/cart",
+    username: "webshop_cart_auth_user",
+    password: "webshop_cart_auth_password"
   },
   catalog: {
-    url: "http://${WEBSHOP_CATALOG_HOST}:${WEBSHOP_CATALOG_PORT}",
-    username: "${WEBSHOP_CATALOG_AUTH_USERNAME}",
-    password: "${WEBSHOP_CATALOG_AUTH_PASSWORD}"
+    url: "http://control-plane.minikube.internal/api/catalog",
+    username: "webshop_catalog_auth_user",
+    password: "webshop_catalog_auth_password"
   },
   checkout: {
-    url: "http://${WEBSHOP_CHECKOUT_HOST}:${WEBSHOP_CHECKOUT_PORT}",
-    username: "${WEBSHOP_CHECKOUT_AUTH_USERNAME}",
-    password: "${WEBSHOP_CHECKOUT_AUTH_PASSWORD}"
+    url: "http://control-plane.minikube.internal/api/checkout",
+    username: "webshop_checkout_auth_user",
+    password: "webshop_checkout_auth_password"
   },
   shipping: {
-    url: "http://${WEBSHOP_SHIPPING_HOST}:${WEBSHOP_SHIPPING_PORT}",
-    username: "${WEBSHOP_SHIPPING_AUTH_USERNAME}",
-    password: "${WEBSHOP_SHIPPING_AUTH_PASSWORD}"
+    url: "http://control-plane.minikube.internal/api/shipping",
+    username: "webshop_shipping_auth_user",
+    password: "webshop_shipping_auth_password"
   },
 
 };

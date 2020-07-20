@@ -29,7 +29,7 @@ catalog:
   image: yourjayer/catalog-service:latest
   port: 8080
   managementPort: 10080
-  loglevel: INFO
+  loglevel: DEBUG
   service:
     port: 8080
     managementPort: 10080
@@ -57,7 +57,7 @@ shipping:
   image: yourjayer/shipping-service:latest
   port: 8080
   managementPort: 10080
-  loglevel: INFO
+  loglevel: DEBUG
   service:
     port: 8080
     managementPort: 10080
@@ -89,7 +89,7 @@ cart:
   image: yourjayer/cart-service:latest
   port: 8080
   managementPort: 10080
-  loglevel: INFO
+  loglevel: DEBUG
   service:
     port: 8080
     managementPort: 10080
@@ -116,7 +116,7 @@ checkout:
   image: yourjayer/checkout-service:latest
   port: 8080
   managementPort: 10080
-  loglevel: INFO
+  loglevel: DEBUG
   service:
     port: 8080
     managementPort: 10080
@@ -134,3 +134,10 @@ checkout:
       checkout:
     ratelimiter:
       checkout:
+
+
+frontend:
+  image: yourjayer/frontend:latest
+  port: 80
+  service:
+    port: 8080

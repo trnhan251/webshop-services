@@ -1,16 +1,16 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "catalog.fullname" . }}-hpa
+  name: {{ template "shipping.fullname" . }}-hpa
   namespace: {{ .Release.Namespace }}
-  labels: {{ include "catalog.labels" . | nindent 4 }}
+  labels: {{ include "shipping.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "catalog.fullname" . }}
+    name: {{ template "shipping.fullname" . }}
   minReplicas: 1
-  maxReplicas: 3
+  maxReplicas: 2
   metrics:
   - type: Resource
     resource:

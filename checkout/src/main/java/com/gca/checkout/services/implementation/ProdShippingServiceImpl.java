@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -17,17 +18,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.IOException;
 
 @Service
-public class ShippingServiceImpl implements ShippingService {
+@Profile("production")
+public class ProdShippingServiceImpl implements ShippingService {
 
     private ShippingService.Client client;
 
-    public ShippingServiceImpl(
+    public ProdShippingServiceImpl(
             @Value("${WEBSHOP_SHIPPING_AUTH_USERNAME}") String username,
             @Value("${WEBSHOP_SHIPPING_AUTH_PASSWORD}") String password,
             @Value("${WEBSHOP_SHIPPING_HOST}") String host,
             @Value("${WEBSHOP_SHIPPING_PORT}") String port
     ) {
-
+        Gson gson = new GsonBuilder().setDateFormat("MM/yyyy").create();
         OkHttpClient okHttp = new OkHttpClient.Builder()
                 .addInterceptor(new BasicAuthInterceptor(username, password))
                 .build();
@@ -35,7 +37,7 @@ public class ShippingServiceImpl implements ShippingService {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + host + ":" + port)
                 .client(okHttp)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         client = retrofit.create(ShippingService.Client.class);

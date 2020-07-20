@@ -12,8 +12,13 @@ import java.util.List;
 public class CostServiceImpl implements CostService {
     @Override
     public CostDto calc(List<BigDecimal> prices) {
+        if (prices.isEmpty()){
+            CostDto c = new CostDto();
+            c.setTotal(BigDecimal.ZERO);
+            c.setShipping(BigDecimal.ZERO);
+            return c;
+        }
         BigDecimal sum = prices.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-        System.out.println("calcing");
         CostDto costDto = new CostDto();
         costDto.setTotal(sum);
 

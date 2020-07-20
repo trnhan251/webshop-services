@@ -1,0 +1,6 @@
+<img src="/assets/{{ product.id }}.jpg" [alt]="product.name">
+<article class="description">
+  <h3>{{ product.name }}</h3>
+  <h4>{{ product.price | currency:'EUR':true }}</h4>
+  <button (click)="add()"><i class="fas fa-cart-plus"></i></button>
+</article>

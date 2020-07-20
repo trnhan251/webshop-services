@@ -1,0 +1,56 @@
+<a class="btn" routerLink="/">Zurück zum Katalog</a>
+<button (click)="empty()">Warenkorb leeren</button>
+<section class="orders" *ngFor="let o of orders">
+  <app-order [order]="o"></app-order>
+</section>
+<section>
+  <h3>Shipping: {{ cost.shipping | currency:'EUR':true }}</h3>
+  <h3>Total: {{ cost.total | currency:'EUR':true }}</h3>
+</section>
+<hr>
+<form [formGroup]="checkoutFg" (ngSubmit)="onSubmit()">
+  <div class="email">
+    <h3>E-Mail</h3>
+    <label>E-Mail</label>
+    <input type="email" formControlName="email" email>
+  </div>
+  <div class="address" formGroupName="address">
+    <h3>Adresse</h3>
+    <label>Straße</label>
+    <input type="text" formControlName="street">
+    <label>Postleitzahl</label>
+    <input formControlName="zipCode">
+    <label>Stadt</label>
+    <input type="text" formControlName="city">
+    <label>Bundesland</label>
+    <input type="text" formControlName="state">
+    <label>Land</label>
+    <input type="text" formControlName="country">
+  </div>
+  <div class="credit" formGroupName="creditCard">
+    <h3>Creditkarte</h3>
+    <label>Nummer</label>
+    <input type="text" formControlName="number">
+    <label>Ablaufdatum</label>
+    <input type="text" formControlName="expire">
+    <label>CCV</label>
+    <input type="text" formControlName="ccv">
+  </div>
+  <button class="submit" type="submit" [disabled]="!checkoutFg.valid">Submit</button>
+  <ul>
+    <li *ngIf="email.errors?.email">Keine korrekte E-Mail angegeben</li>
+    <li *ngIf="email.errors?.required">Keine E-Mail angegeben</li>
+    <li *ngIf="checkoutFg.get('address.street').errors?.required">Keine Straße angegeben</li>
+    <li *ngIf="checkoutFg.get('address.zipCode').errors?.required">Keine Postleitzahl angegeben</li>
+    <li *ngIf="checkoutFg.get('address.zipCode').errors?.pattern">Keine korrekte Postleitzahl angegeben</li>
+    <li *ngIf="checkoutFg.get('address.city').errors?.required">Keine Stadt angegeben</li>
+    <li *ngIf="checkoutFg.get('address.state').errors?.required">Kein Bundesland angegeben</li>
+    <li *ngIf="checkoutFg.get('creditCard.number').errors?.required">Keine Nummer angegeben</li>
+    <li *ngIf="checkoutFg.get('creditCard.number').errors?.bad">Keine korrekte Nummer angegeben</li>
+    <li *ngIf="checkoutFg.get('creditCard.number').errors?.nan">Kreditkartennummer enthält Buchstaben</li>
+    <li *ngIf="checkoutFg.get('creditCard.expire').errors?.required">Kein Ablaufdatum angegeben</li>
+    <li *ngIf="checkoutFg.get('creditCard.expire').errors?.pattern">Kein korrektes Ablaufdatum angegeben (MM/yyyy)</li>
+    <li *ngIf="checkoutFg.get('creditCard.ccv').errors?.required">Keine CCV angegeben</li>
+    <li *ngIf="checkoutFg.get('creditCard.ccv').errors?.pattern">Keine korrekte CCV angegeben</li>
+  </ul>
+</form>

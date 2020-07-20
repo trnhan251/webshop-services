@@ -1,0 +1,11 @@
+<img src="/assets/{{order.id}}.jpg" [alt]="order.name">
+<article class="description">
+  <div class="headings">
+    <h3 class="title">{{ order.name }}</h3>
+    <h5 class="sku">Id: {{ order.id }}</h5>
+    <h4 class="price">Price: {{ order.price | currency:'EUR':true }}</h4>
+  </div>
+  <div class="buttons">
+    <button class="rm" (click)="rm()">Remove</button>
+  </div>
+</article>

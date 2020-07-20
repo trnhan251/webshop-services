@@ -1,0 +1,53 @@
+:host {
+
+  .btn,
+  button {
+    display: inline-block;
+    margin: 16px;
+  }
+
+  .orders {
+    display: block;
+    padding-bottom: 20px;
+    ;
+  }
+
+  form {
+    display: grid;
+    grid-template-areas:
+      "em ad cr"
+      "err err sub";
+
+    button.submit {
+      grid-area: sub;
+      justify-self: start;
+      align-self: center;
+    }
+  }
+
+  .email {
+    grid-area: em;
+  }
+
+  .address {
+    grid-area: ad;
+  }
+
+  .credit {
+    grid-area: cr;
+  }
+
+  ul {
+    grid-area: err;
+  }
+
+  .email,
+  .address,
+  .credit {
+
+
+    &>* {
+      display: block;
+    }
+  }
+}

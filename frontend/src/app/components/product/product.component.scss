@@ -1,0 +1,20 @@
+@import "mixins.scss";
+
+:host {
+  display: inline-block;
+  @include border();
+
+  @include shadow();
+
+  article.description {
+    margin: 16px;
+
+    text-align: center;
+  }
+
+  img {
+    object-fit: cover;
+    height: 200px;
+    width: 300px;
+  }
+}

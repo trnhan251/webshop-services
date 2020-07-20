@@ -1,0 +1,17 @@
+:host {
+  display: grid;
+  background-color: #222;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  position: fixed;
+
+  a {
+    color: white;
+  }
+
+  a.cart {
+    font-size: 2em;
+  }
+}

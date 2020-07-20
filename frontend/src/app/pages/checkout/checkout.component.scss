@@ -1,0 +1,46 @@
+@import "mixins.scss";
+
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  .wrp {
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: column;
+    width: 500px;
+    @include border();
+    @include shadow();
+
+    article.description {
+      margin: 0 8px;
+    }
+
+    h4 {
+      margin: 8px 0;
+    }
+
+    .buttons {
+
+      &>button {
+        margin: 0 4px;
+      }
+    }
+
+    h3.title {
+      margin-bottom: 0;
+    }
+
+    h5.sku {
+      margin-top: 0;
+    }
+
+    img {
+      grid-area: img;
+      object-fit: cover;
+      height: 200px;
+      width: 300px;
+    }
+  }
+}

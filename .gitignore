@@ -36,3 +36,4 @@ build/
 ### Temp ###
 .tmp
 .temp
+*.log

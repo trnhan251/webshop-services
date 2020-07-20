@@ -7,9 +7,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Embeddable
 public class AddressDto {
     private String street;
-    @PositiveOrZero
-    @Max(value = 99999)
-    private Integer zipCode;
+    private String zipCode;
     private String city;
     private String state;
     private String country;
@@ -22,11 +20,11 @@ public class AddressDto {
         this.street = street;
     }
 
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

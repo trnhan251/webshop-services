@@ -1,0 +1,6 @@
+<ng-container *ngFor="let p of catalog">
+  <app-product [product]="p"></app-product>
+</ng-container>
+<ng-container *ngIf="catalog.length == 0">
+  <h2>Alle Produkte sind im Warenkorb</h2>
+</ng-container>

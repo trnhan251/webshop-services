@@ -1,0 +1,29 @@
+<section>
+  <div class="wrp" *ngFor="let p of to.products">
+
+    <img src="/assets/{{p.id}}.jpg" alt="{{p.name}}">
+    <article class="description">
+      <div class="headings">
+        <h3 class="title">{{ p.name }}</h3>
+        <h5 class="sku">Id: {{ p.id }}</h5>
+        <h4 class="price">Price: {{ p.price | currency:'EUR':true }}</h4>
+      </div>
+    </article>
+  </div>
+
+</section>
+<section>
+  <h2>Trackingnummer</h2>
+  <h3>{{ to.trackingNumber }}</h3>
+  <hr>
+  <h4>Persönliche Details</h4>
+  <h5>Straße: {{to.address.street}}</h5>
+  <h5>Postleitzahl: {{to.address.zipCode}}</h5>
+  <h5>Land: {{to.address.country}}</h5>
+  <h5>Bundesland: {{to.address.state}}</h5>
+  <h5>Stadt: {{to.address.city}}</h5>
+  <hr>
+  <h4>Buchungsdetails</h4>
+  <h5>Kreditkartennummer: {{to.creditCard.number}}</h5>
+  <h5>Ablaufdatum: {{to.creditCard.expire}}</h5>
+</section>

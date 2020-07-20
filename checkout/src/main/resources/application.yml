@@ -7,7 +7,7 @@ spring:
   main:
     web-application-type: reactive
 
-spring.profiles.active: no-security
+spring.profiles.active: dev
 
 spring.resources.cache.cachecontrol.max-age: 600
 spring.resources.cache.cachecontrol.cache-public: true
@@ -33,7 +33,7 @@ management.health:
   ratelimiters.enabled: true
   diskspace.enabled: false
 
-logging.level.root: INFO
+logging.level.root: DEBUG
 
 resilience4j.circuitbreaker:
   configs:

@@ -51,7 +51,6 @@ public class ShippingServiceImpl implements ShippingService {
         shippingOrder.setTrackingNumber(id);
 
         shippingRepository.save(shippingOrder);
-        System.out.println("HERE I AM");
         return modelMapper.map(shippingOrder, TrackingShippingOrderDto.class);
     }
 

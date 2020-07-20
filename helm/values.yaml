@@ -19,7 +19,7 @@ postgres:
   storageSize: 1G
 
   username: postgres
-  password: ""
+  password: "postgres"
   db: "" # Database will be the same as .postgres.username if left empty.
 
   image: postgres:12.3-alpine
@@ -36,10 +36,10 @@ catalog:
   db:
     schema: webshop_catalog_schema
     username: webshop_catalog_db_user
-    password: ""
+    password: "webshop_catalog_db_password"
   auth:
     username: webshop_catalog_auth_user
-    password: ""
+    password: "webshop_catalog_auth_password"
   resilience4j:
     retry:
       catalog:
@@ -64,10 +64,10 @@ shipping:
   db:
     schema: webshop_shipping_schema
     username: webshop_shipping_db_user
-    password: ""
+    password: webshop_shipping_db_password
   auth:
     username: webshop_shipping_auth_user
-    password: ""
+    password: webshop_shipping_auth_password
   resilience4j:
     retry:
       shipping:
@@ -96,10 +96,10 @@ cart:
   db:
     schema: webshop_cart_schema
     username: webshop_cart_db_user
-    password: ""
+    password: webshop_cart_db_password
   auth:
     username: webshop_cart_auth_user
-    password: ""
+    password: webshop_cart_auth_password
   resilience4j:
     retry:
       cart:
@@ -122,7 +122,7 @@ checkout:
     managementPort: 10080
   auth:
     username: webshop_checkout_auth_user
-    password: ""
+    password: webshop_checkout_auth_password
   resilience4j:
     retry:
       checkout:
@@ -134,12 +134,3 @@ checkout:
       checkout:
     ratelimiter:
       checkout:
-
-prometheus:
-  server:
-    global:
-      scrape_interval: 10s
-    retention: "10m"
-    persistentVolume.enabled: false
-  alertmanager.persistentVolume.enabled: false
-

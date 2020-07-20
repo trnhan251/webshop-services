@@ -1,0 +1,15 @@
+@mixin shadow {
+  -webkit-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.60);
+  -moz-box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.60);
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.60);
+}
+
+@mixin shadow-pressed {
+  -webkit-box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.80);
+  -moz-box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.80);
+  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.80);
+}
+
+@mixin border {
+  border: 1px solid #000;
+}

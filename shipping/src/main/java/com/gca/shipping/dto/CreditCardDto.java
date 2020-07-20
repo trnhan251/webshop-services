@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Date;
 
@@ -17,9 +18,8 @@ public class CreditCardDto {
     @Future
     @JsonFormat(pattern = "MM/yyyy")
     private Date expire;
-    @PositiveOrZero
-    @Max(value = 999, message = "[yolo] msg")
-    private Integer ccv;
+    @Pattern(regexp = "\\d{3}")
+    private String ccv;
 
     public String getNumber() {
         return number;
@@ -37,11 +37,11 @@ public class CreditCardDto {
         this.expire = expire;
     }
 
-    public Integer getCcv() {
+    public String getCcv() {
         return ccv;
     }
 
-    public void setCcv(Integer ccv) {
+    public void setCcv(String ccv) {
         this.ccv = ccv;
     }
 }

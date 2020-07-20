@@ -56,13 +56,11 @@ data:
             minimumNumberOfCalls: 10
             waitDurationInOpenState: 20s
             failureRateThreshold: 50
-            permittedNumberOfCallsInHalfOpenState: 3
+            permittedNumberOfCallsInHalfOpenState: 5
             slidingWindowType: TIME_BASED
             slidingWindowSize: 100
             recordExceptions:
-              - org.springframework.web.client.HttpServerErrorException
-              - java.util.concurrent.TimeoutException
-              - java.io.IOException
+              - java.lang.Throwable
         instances:
           catalog:
             baseConfig: default
@@ -99,7 +97,7 @@ data:
         configs:
           default:
             registerHealthIndicator: true
-            limitForPeriod: 10
+            limitForPeriod: 50
             limitRefreshPeriod: 1s
             timeoutDuration: 0
         instances:
